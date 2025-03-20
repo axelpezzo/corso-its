@@ -1,0 +1,12 @@
+{
+  "name": "corso-its",
+  "description": "Corso ITS",
+  "version": "0.0.1",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.16.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.22.0"
+  }
+}
