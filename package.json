@@ -5,16 +5,20 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "prisma": "npx prisma generate",
+    "prisma:migrate:dev": "npx prisma migrate dev",
     "dev:docker": "docker-compose -f docker-compose.yml up",
     "dev:docker:build": "docker-compose -f docker-compose.yml up --build",
-    "dev": "npx tsx watch src/index.ts",
+    "dev": "tsx watch src/index.ts",
     "lint": "eslint ./src"
   },
   "dependencies": {
     "@koa/router": "^13.1.0",
+    "@prisma/client": "^6.5.0",
     "dotenv": "^16.4.7",
     "koa": "^2.16.0",
-    "pg": "^8.14.1"
+    "pg": "^8.14.1",
+    "prisma": "^6.5.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
