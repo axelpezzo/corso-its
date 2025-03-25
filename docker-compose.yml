@@ -12,6 +12,9 @@ services:
       - corso-its-net
     volumes:
       - .:/app
+    depends_on:
+      corso_its_db:
+        condition: service_healthy
 
   corso_its_db:
     container_name: corso_its_db
