@@ -10,7 +10,7 @@ const app = new Koa();
 const router = new Router();
 
 router.get("/db", async (ctx) => {
-  const result = await query("SELECT NOW()", "");
+  const result = await query("SELECT NOW()");
   ctx.body = result.rows;
 });
 
