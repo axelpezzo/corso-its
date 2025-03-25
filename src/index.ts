@@ -2,6 +2,7 @@ import Koa from "koa";
 import Router from "@koa/router";
 import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
+import characterRoutes from "./routes/character.js";
 
 // Init "dotenv"
 dotenv.config();
@@ -22,6 +23,7 @@ router.post("/character", async (ctx) => {
   ctx.body = "Character created: " + character.id;
 });
 
+app.use(characterRoutes.routes()).use(characterRoutes.allowedMethods());
 app.use(router.routes()).use(router.allowedMethods());
 
 app.listen(process.env.APP_PORT || 3000);
