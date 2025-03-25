@@ -1,6 +1,7 @@
 import Koa from "koa";
 import Router from "@koa/router";
 import dotenv from "dotenv";
+import { query } from "./db.js";
 
 // Init "dotenv"
 dotenv.config();
@@ -8,8 +9,9 @@ dotenv.config();
 const app = new Koa();
 const router = new Router();
 
-router.get("/", (ctx) => {
-  ctx.body = "Hello World!";
+router.get("/db", async (ctx) => {
+  const result = await query("SELECT NOW()", "");
+  ctx.body = result.rows;
 });
 
 app.use(router.routes()).use(router.allowedMethods());
