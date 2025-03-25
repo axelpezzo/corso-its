@@ -5,7 +5,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/index.js",
+    "dev:docker": "docker-compose -f docker-compose.yml up",
+    "dev:docker:build": "docker-compose -f docker-compose.yml up --build",
+    "dev": "npx tsx watch src/index.ts",
     "lint": "eslint ./src"
   },
   "dependencies": {
