@@ -42,4 +42,3 @@ volumes:
 networks:
   corso-its-net:
     name: corso-its-net
-    driver: bridge
