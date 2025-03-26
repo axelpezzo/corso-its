@@ -24,7 +24,6 @@ router.post("/character", async (ctx) => {
   ctx.body = "Character created: " + character.id;
 });
 
-
 app.use(bodyParser());
 app.use(characterRoutes.routes()).use(characterRoutes.allowedMethods());
 app.use(router.routes()).use(router.allowedMethods());
