@@ -16,3 +16,10 @@ model Character {
   stamina Int?
   mana    Int?
 }
+
+model Class {
+  id      String  @id @default(uuid())
+  name    String  @db.VarChar(20)
+  key     String  @db.VarChar(20)
+  description String?
+}
