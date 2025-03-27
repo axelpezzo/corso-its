@@ -17,6 +17,15 @@ model Character {
   mana    Int?
 }
 
+model RaceAttrMod {
+  race    Race @relation(fields: [idRace], references: [id])
+  idRace  String
+  attribute Attribute @relation(fields: [idAttribute], references: [id])
+  idAttribute String
+  value   Int 
+
+  @@id([idRace, idAttribute])
+}
 
 model Class {
   id      String  @id @default(uuid())
@@ -40,4 +49,3 @@ model Race {
   modStamina Int
   modMana Int
 }
-
