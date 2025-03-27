@@ -8,13 +8,3 @@ export const characterSchema = z.object({
   stamina: z.number().int().optional(),
   mana: z.number().int().optional(),
 });
-
-export const Attribute = z.object([
-  {
-    key: z.string().refine((value:string) => /^[a-z0-9_]+$/.test(value), {
-      message: "Invalid attribute name",
-    }),
-    name: z.string(),
-    value: z.number(),
-  },
-]);
