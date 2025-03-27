@@ -13,15 +13,20 @@ const router = new Router();
 const prisma = new PrismaClient();
 
 router.post("/character", async (ctx) => {
-  const character = await prisma.character.create({
-    data: {
-      name: "Name 1",
-      age: 30,
-    },
-  });
+  try {
+        const character = await prisma.character.create({
+        data: {
+        name: "Name 1",
+        age: 30,
+        },
+    });
 
-  ctx.status = 201;
-  ctx.body = "Character created: " + character.id;
+    ctx.status = 201;
+    ctx.body = "Character created: " + character.id;
+    } catch (error) {
+        ctx.status = 500,
+        ctx.body = "Error" + error
+    }
 });
 
 app.use(bodyParser());
