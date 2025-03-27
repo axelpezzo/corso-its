@@ -30,10 +30,11 @@ model Skill{
 }
 
 model ClassSkillMod {
-  id      String @id @default(uuid())
   skill   Skill  @relation(fields: [idSkill], references: [id])
   idSkill String 
   class   Class  @relation(fields: [idClass], references: [id])
   idClass String 
   value   Int
+  
+  @@id([idSkill, idClass])
 }
