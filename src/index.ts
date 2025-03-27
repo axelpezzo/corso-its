@@ -1,7 +1,6 @@
 import Koa from "koa";
 import Router from "@koa/router";
 import dotenv from "dotenv";
-import { PrismaClient } from "@prisma/client";
 import characterRoutes from "./routes/character.js";
 import bodyParser from "koa-bodyparser";
 
