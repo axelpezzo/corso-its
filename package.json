@@ -9,7 +9,6 @@
     "prisma:migrate:dev": "npx prisma migrate dev",
     "dev:docker": "docker-compose -f docker-compose.yml up",
     "dev:docker:build": "docker-compose -f docker-compose.yml up --build",
-    "dev:docker:reset": "docker-compose -f docker-compose.yml down -v && docker-compose -f docker-compose.yml up --build --force-recreate",
     "dev": "npm run prisma:migrate:dev && npm run prisma:generate && npx tsx watch src/index.ts",
     "lint": "eslint ./src"
   },
