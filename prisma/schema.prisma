@@ -17,6 +17,14 @@ model Character {
   mana    Int?
 }
 
+
+model Class {
+  id      String  @id @default(uuid())
+  name    String  @db.VarChar(20)
+  key     String  @db.VarChar(20)
+  description String?
+}
+
 model Attribute{
   id         String  @id @default(uuid())
   key        String  @db.VarChar(20)
@@ -32,3 +40,4 @@ model Race {
   modStamina Int
   modMana Int
 }
+
