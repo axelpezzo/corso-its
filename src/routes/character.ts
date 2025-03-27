@@ -50,10 +50,13 @@ router.post("/", async (ctx) => {
 
     if (error instanceof ZodError) {
       console.error("Validation Error:", error.errors);
+      let errors: string = "";
       error.errors.forEach((err) => {
-        ctx.body = `Path: ${err.path.join(".")}`;
-        ctx.body = `Message: ${err.message}`;
+        errors += `Path: ${err.path.join(".")}\n`;
+        errors += `Message: ${err.message}\n`;
       });
+
+      ctx.body = errors;
     } else {
       ctx.body = "Generic Error: " + error;
     }
