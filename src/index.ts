@@ -10,7 +10,8 @@ dotenv.config();
 const app = new Koa();
 const router = new Router();
 
-app.use(bodyParser())
+app.use(bodyParser());
+
 app.use(characterRoutes.routes()).use(characterRoutes.allowedMethods());
 app.use(router.routes()).use(router.allowedMethods());
 
