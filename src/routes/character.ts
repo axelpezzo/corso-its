@@ -67,34 +67,53 @@ router.get("/:id", async (ctx) => {
     ctx.status = 500;
     ctx.body = "Error: " + error;
   }
-  
-  // patch
-  router.patch("/:id", (ctx, next) => characterExists(ctx, next), async (ctx) => {
-    const id = ctx.params.id;
-    const data = ctx.request.body as Character;
+});
 
-    try{
-      const character = await prisma.character.update({
-        where: {
-          id: id,
-        },
-        data: {
-          name: data.name,
-          history: data.history,
-          age: data.age,
-          health: data.health,
-          stamina: data.stamina,
-          mana: data.mana,
-        },
-      });
+// patch
+router.patch("/:id", characterExists, async (ctx) => {
+  const id = ctx.params.id;
+  const data = ctx.request.body as Character;
 
-      ctx.status = 201;
-      ctx.body = "Character updated: " + character.id;
-    } catch (error){
-      ctx.status = 500;
-      ctx.body = "Error: " + error;
-    }
-  });
+  try{
+    const character = await prisma.character.update({
+      where: {
+        id: id,
+      },
+      data: {
+        name: data.name,
+        history: data.history,
+        age: data.age,
+        health: data.health,
+        stamina: data.stamina,
+        mana: data.mana,
+      },
+    });
+
+    ctx.status = 201;
+    ctx.body = "Character updated: " + character.id;
+  } catch (error){
+    ctx.status = 500;
+    ctx.body = "Error: " + error;
+  }
+});
+
+// delete
+router.delete("/:id", characterExists, async (ctx) => {
+  const id = ctx.params.id;
+
+  try{
+    const character = await prisma.character.delete({
+      where: {
+        id: id,
+      }
+    });
+
+    ctx.status = 201;
+    ctx.body = "Character: " + character.id + " deleted succesfully";
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = "Error: " + error;
+  }
 });
 
 export default router;

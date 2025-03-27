@@ -15,7 +15,7 @@ export const characterExists = async (ctx: Context, next: Next) => {
         ctx.body = "Character not found";
     }
     else {
-        next();
+        await next();
     }
 
     return character;
