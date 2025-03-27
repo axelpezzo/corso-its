@@ -16,3 +16,12 @@ model Character {
   stamina Int?
   mana    Int?
 }
+
+model Race {
+  id String @id @default(uuid())
+  key String @db.VarChar(20)
+  name String @db.VarChar(20)
+  modHealth Int
+  modStamina Int
+  modMana Int
+}
