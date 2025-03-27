@@ -30,10 +30,11 @@ model Attribute {
 }
 
 model RaceAttrMod {
-  id      String @id @default(uuid())
   race    Race @relation(fields: [idRace], references: [id])
   idRace  String
   attribute Attribute @relation(fields: [idAttribute], references: [id])
   idAttribute String
   value   Int 
+
+  @@id([idRace, idAttribute])
 }
