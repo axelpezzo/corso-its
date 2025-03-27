@@ -2,7 +2,9 @@ import Router from "@koa/router";
 import prisma from "../../prisma/client.ts";
 import { Character } from "@prisma/client";
 import { characterExists } from "../middlewares/middlewareCharacter.ts";
-import { createContext } from "vm";
+import { characterSchema } from "../../prisma/validation/validationCharacter.ts";
+import { ZodError } from "zod";
+import { validationError } from "../utilities/errorsHandler.ts";
 
 const router = new Router({
   prefix: "/character",
@@ -22,25 +24,35 @@ router.get("/", async (ctx) => {
 
 // POST /: create a character
 router.post("/", async (ctx) => {
-  const data = ctx.request.body as Character;
-
   try {
-    const character = await prisma.character.create({
-      data: {
-        name: data.name,
-        history: data.history,
-        age: data.age,
-        health: data.health,
-        stamina: data.stamina,
-        mana: data.mana,
-      },
-    });
+    ctx.request.body = characterSchema.parse(ctx.request.body);
+    const data = ctx.request.body as Character;
 
-    ctx.status = 201;
-    ctx.body = "Character created: " + character.id;
+    try {
+      const character = await prisma.character.create({
+        data: {
+          name: data.name,
+          history: data.history,
+          age: data.age,
+          health: data.health,
+          stamina: data.stamina,
+          mana: data.mana,
+        },
+      });
+
+      ctx.status = 201;
+      ctx.body = "Character created: " + character.id;
+    } catch (error) {
+      ctx.status = 500;
+      ctx.body = "Error: " + error;
+    }
   } catch (error) {
     ctx.status = 500;
-    ctx.body = "Error: " + error;
+    if (error instanceof ZodError) {
+      ctx.body = validationError(error);
+    } else {
+      ctx.body = "Generic Error: " + error;
+    }
   }
 });
 
