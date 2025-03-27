@@ -16,3 +16,24 @@ model Character {
   stamina Int?
   mana    Int?
 }
+
+model Class{
+  id      String @id @default(uuid())
+
+  skills ClassSkillMod[]
+}
+
+model Skill{
+  id      String @id @default(uuid())
+
+  classes ClassSkillMod[]
+}
+
+model ClassSkillMod {
+  id      String @id @default(uuid())
+  skill   Skill  @relation(fields: [idSkill], references: [id])
+  idSkill String 
+  class   Class  @relation(fields: [idClass], references: [id])
+  idClass String 
+  value   Int
+}
