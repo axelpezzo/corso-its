@@ -19,7 +19,7 @@ model Character {
 
 model Attribute{
   id         String  @id @default(uuid())
-  key   String  @db.VarChar(20)
+  key        String  @db.VarChar(20)
   name       String  @db.VarChar(20)
   value      Int?
 }
