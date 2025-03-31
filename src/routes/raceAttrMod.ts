@@ -1,11 +1,13 @@
 import Router from "@koa/router";
-import { ZodError } from "zod";
 import prisma from "../../prisma/client.ts";
+import { RaceAttrMod } from "@prisma/client";
+import { RaceAttrModSchema } from "../../prisma/validation/validationRaceAttrMod.ts";
+import { ZodError } from "zod";
 import { validationError } from "../utilities/errorsHandler.ts";
 
 
 const router = new Router({
-    prefix: "";
+    prefix: "test",
 });
 
 // GET /: retrive all races attribute mode
@@ -24,7 +26,7 @@ router.get("/", async (ctx) => {
 // POST /: create a raceAttrMod
 router.post("/", async (ctx) => {
     try {
-      ctx.request.body = raceAttrModSchema.parse(ctx.request.body);
+      ctx.request.body = RaceAttrModSchema.parse(ctx.request.body);
       const data = ctx.request.body as RaceAttrMod;
   
       try {
@@ -37,7 +39,7 @@ router.post("/", async (ctx) => {
         });
   
         ctx.status = 201;
-        ctx.body = "Race Attribute Relation added: " + raceAttrMod.id;
+        ctx.body = "Race Attribute Relation created: " + "idRace: " + raceAttrMod.idRace + "idAttribute: " + raceAttrMod.idAttribute;
       } catch (error) {
         ctx.status = 500;
         ctx.body = "Error: " + error;
@@ -50,4 +52,6 @@ router.post("/", async (ctx) => {
         ctx.body = "Generic Error: " + error;
       }
     }
-  });
+});
+
+export default router;
