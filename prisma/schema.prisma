@@ -32,6 +32,8 @@ model Skill {
   name    String  @db.VarChar(20)
   key    String  @db.VarChar(20)
   value   Int?
+  
+  classes ClassSkillMod[]
 }
 
 
@@ -40,6 +42,18 @@ model Class {
   name    String  @db.VarChar(20)
   key     String  @db.VarChar(20)
   description String?
+  
+  skills ClassSkillMod[]
+}
+
+model ClassSkillMod {
+  skill   Skill  @relation(fields: [idSkill], references: [id])
+  idSkill String 
+  class   Class  @relation(fields: [idClass], references: [id])
+  idClass String 
+  value   Int
+  
+  @@id([idSkill, idClass])
 }
 
 model Attribute{
