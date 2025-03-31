@@ -20,5 +20,6 @@ model Character {
 model Skill {
   id      String  @id @default(uuid())
   name    String  @db.VarChar(20)
-  value    Int?
+  key    String  @db.VarChar(20)
+  value   Int?
 }
