@@ -4,6 +4,7 @@ import { Character } from "@prisma/client";
 import { characterExists } from "../middlewares/middlewareCharacter.ts";
 import { characterSchema } from "../../prisma/validation/validationCharacter.ts";
 import { ZodError } from "zod";
+import { validationError } from "../utilities/errorsHandler.ts";
 
 const router = new Router({
   prefix: "/character",
@@ -47,16 +48,8 @@ router.post("/", async (ctx) => {
     }
   } catch (error) {
     ctx.status = 500;
-
     if (error instanceof ZodError) {
-      console.error("Validation Error:", error.errors);
-      let errors: string = "";
-      error.errors.forEach((err) => {
-        errors += `Path: ${err.path.join(".")}\n`;
-        errors += `Message: ${err.message}\n`;
-      });
-
-      ctx.body = errors;
+      ctx.body = validationError(error);
     } else {
       ctx.body = "Generic Error: " + error;
     }
