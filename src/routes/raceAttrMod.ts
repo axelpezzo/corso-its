@@ -5,12 +5,10 @@ import { RaceAttrModSchema } from "../../prisma/validation/validationRaceAttrMod
 import { ZodError } from "zod";
 import { validationError } from "../utilities/errorsHandler";
 
-const router = new Router({
-  prefix: "test",
-});
+const router = new Router();
 
 // GET /: retrive all races attribute mode
-router.get("/", async (ctx) => {
+router.get("/race/attr/mod", async (ctx) => {
   try {
     const raceAttrMod = await prisma.raceAttrMod.findMany();
     ctx.status = 201;
@@ -22,10 +20,16 @@ router.get("/", async (ctx) => {
 });
 
 // POST /: create a raceAttrMod
-router.post("/", async (ctx) => {
+router.post("/race/:idRace/attr/:idAttribute", async (ctx) => {
   try {
     ctx.request.body = RaceAttrModSchema.parse(ctx.request.body);
     const data = ctx.request.body as RaceAttrMod;
+
+    if(!idRace || !idAttribute) {
+      ctx.status = 400;
+      ctx.body = "Error: idRace and idAttribute are required";
+      return;
+    }
 
     try {
       const raceAttrMod = await prisma.raceAttrMod.create({
