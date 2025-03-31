@@ -2,7 +2,7 @@ import Router from "@koa/router";
 import prisma from "../../prisma/client.ts";
 import { Attribute } from "@prisma/client";
 //import { characterExists } from "../middlewares/middlewareCharacter.ts";
-import { AttributeSchema } from "../../prisma/validation/validationAttribute.ts";
+import { attributeSchema } from "../../prisma/validation/validationAttribute.ts";
 import { ZodError } from "zod";
 import { validationError } from "../utilities/errorsHandler.ts";
 
@@ -25,7 +25,7 @@ const router = new Router({
   // POST /: create a attribute
   router.post("/", async (ctx) => {
     try {
-      ctx.request.body = AttributeSchema.parse(ctx.request.body);
+      ctx.request.body = attributeSchema.parse(ctx.request.body);
       const data = ctx.request.body as Attribute;
   
       try {
@@ -34,7 +34,7 @@ const router = new Router({
             name: data.name,
             key: data.key,
             value: data.value,
-            RaceAttrMod: data.RaceAttrMod
+            raceAttrMod: data.raceAttrMod
           },
         });
   
@@ -53,3 +53,5 @@ const router = new Router({
       }
     }
   });
+
+  export default router;

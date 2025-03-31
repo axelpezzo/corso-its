@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const Attribute = z.object([
+export const attributeSchema = z.object([
     {
       key: z.string().refine((value:string) => /^[a-z0-9_]+$/.test(value), {
         message: "Invalid attribute name",
