@@ -2,8 +2,8 @@ import Router from "@koa/router";
 import prisma from "../../prisma/client";
 import { RaceAttrMod } from "@prisma/client";
 import { RaceAttrModSchema } from "../../prisma/validation/validationRaceAttrMod";
-import { ZodError } from "zod";
 import { validationError } from "../utilities/errorsHandler";
+import { ZodError } from "zod";
 
 const router = new Router();
 
@@ -25,7 +25,10 @@ router.post("/race/:idRace/attr/:idAttribute", async (ctx) => {
     ctx.request.body = RaceAttrModSchema.parse(ctx.request.body);
     const data = ctx.request.body as RaceAttrMod;
 
-    if(!idRace || !idAttribute) {
+    const idRace = ctx.params.idRace;
+    const idAttribute = ctx.params.idAttribute;
+
+    if (!idRace || !idAttribute) {
       ctx.status = 400;
       ctx.body = "Error: idRace and idAttribute are required";
       return;
@@ -34,8 +37,8 @@ router.post("/race/:idRace/attr/:idAttribute", async (ctx) => {
     try {
       const raceAttrMod = await prisma.raceAttrMod.create({
         data: {
-          idRace: data.idRace,
-          idAttribute: data.idAttribute,
+          idRace: idRace,
+          idAttribute: idAttribute,
           value: data.value,
         },
       });
