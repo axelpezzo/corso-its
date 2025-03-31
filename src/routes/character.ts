@@ -37,6 +37,8 @@ router.post("/", async (ctx) => {
           health: data.health,
           stamina: data.stamina,
           mana: data.mana,
+          idClass: data.idClass,
+          idRace: data.idRace,
         },
       });
 

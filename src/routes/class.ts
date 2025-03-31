@@ -1,14 +1,13 @@
 import Router from "@koa/router";
-import prisma from "../../prisma/client.ts";
+import prisma from "../../prisma/client";
 import { Class } from "@prisma/client";
 import { ZodError } from "zod";
-import { validationError } from "../utilities/errorsHandler.ts";
-import { classSchema } from "../../prisma/validation/validationClass.ts";
+import { validationError } from "../utilities/errorsHandler";
+import { classSchema } from "../../prisma/validation/validationClass";
 
 const router = new Router({
   prefix: "/class",
 });
-
 
 // GET /: retrieve all classes
 router.get("/", async (ctx) => {
@@ -27,7 +26,7 @@ router.post("/", async (ctx) => {
   try {
     ctx.request.body = classSchema.parse(ctx.request.body);
     const data = ctx.request.body as Class;
-  
+
     try {
       const clazz = await prisma.class.create({
         data: {
@@ -36,7 +35,7 @@ router.post("/", async (ctx) => {
           description: data.description,
         },
       });
-  
+
       ctx.status = 201;
       ctx.body = "Class created: " + clazz.id;
     } catch (error) {
@@ -52,6 +51,5 @@ router.post("/", async (ctx) => {
     }
   }
 });
-
 
 export default router;

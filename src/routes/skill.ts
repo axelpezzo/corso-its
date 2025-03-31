@@ -1,10 +1,10 @@
 import Router from "@koa/router";
-import prisma from "../../prisma/client.ts";
+import prisma from "../../prisma/client";
 import { Skill } from "@prisma/client";
-import { skillExists } from "../middlewares/middlewareSkill.ts";
-import { skillSchema } from "../../prisma/validation/validationSkill.ts";
+import { skillExists } from "../middlewares/middlewareSkill";
+import { skillSchema } from "../../prisma/validation/validationSkill";
 import { ZodError } from "zod";
-import { validationError } from "../utilities/errorsHandler.ts";
+import { validationError } from "../utilities/errorsHandler";
 
 const router = new Router({
   prefix: "/skill",
