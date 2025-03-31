@@ -72,3 +72,27 @@ model Race {
   modMana     Int
   RaceAttrMod RaceAttrMod[]
 }
+
+
+model Class {
+  id      String  @id @default(uuid())
+  name    String  @db.VarChar(20)
+  key     String  @db.VarChar(20)
+  description String?
+}
+
+model Attribute{
+  id         String  @id @default(uuid())
+  key        String  @db.VarChar(20)
+  name       String  @db.VarChar(20)
+  value      Int?
+}
+
+model Race {
+  id String @id @default(uuid())
+  key String @db.VarChar(20)
+  name String @db.VarChar(20)
+  modHealth Int
+  modStamina Int
+  modMana Int
+}
