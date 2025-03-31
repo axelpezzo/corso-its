@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "prisma:generate": "npx prisma generate",
-    "prisma:migrate:dev": "npx prisma migrate dev",
+    "prisma:migrate:dev": "npx prisma migrate dev --name latest",
     "dev:docker": "docker-compose -f docker-compose.yml up",
     "dev:docker:build": "docker-compose -f docker-compose.yml up --build",
     "dev": "npm run prisma:migrate:dev && npm run prisma:generate && npx tsx watch src/index.ts",
