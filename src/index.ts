@@ -2,6 +2,7 @@ import Koa from "koa";
 import Router from "@koa/router";
 import dotenv from "dotenv";
 import characterRoutes from "./routes/character.js";
+import attribureRoutes from "./routes/attribute.ts";
 import raceAttrModRoutes from "./routes/raceAttrMod.ts";
 import classRoutes from "./routes/class.ts";
 import bodyParser from "koa-bodyparser";
@@ -20,6 +21,7 @@ router.get("/", (ctx) => {
 });
 
 app.use(characterRoutes.routes()).use(characterRoutes.allowedMethods());
+app.use(attribureRoutes.routes()).use(attribureRoutes.allowedMethods());
 app.use(classSkillModRoutes.routes()).use(classSkillModRoutes.allowedMethods());
 app.use(raceAttrModRoutes.routes()).use(RaceAttrModRoutes.allowedMethods());
 app.use(classRoutes.routes()).use(classRoutes.allowedMethods());

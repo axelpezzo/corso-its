@@ -7,8 +7,8 @@ CREATE TABLE "Character" (
     "health" INTEGER,
     "stamina" INTEGER,
     "mana" INTEGER,
-    "idRace" TEXT,
-    "idClass" TEXT,
+    "idRace" TEXT NOT NULL,
+    "idClass" TEXT NOT NULL,
 
     CONSTRAINT "Character_pkey" PRIMARY KEY ("id")
 );
