@@ -47,6 +47,7 @@ model Attribute {
   key         String        @db.VarChar(20)
   name        String        @db.VarChar(20)
   value       Int?          @default(20)
+  
   raceAttrMod RaceAttrMod[]
 }
 
