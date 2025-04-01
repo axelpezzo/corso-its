@@ -4,6 +4,7 @@ import { Character } from "@prisma/client";
 import { characterExists } from "../middlewares/middlewareCharacter";
 import { characterSchema } from "../../prisma/validation/validationCharacter";
 import { validationError } from "../utilities/errorsHandler";
+import { authUser } from "../middlewares/middlewareAuth";
 import { ZodError } from "zod";
 
 const router = new Router({
@@ -11,7 +12,7 @@ const router = new Router({
 });
 
 // GET /: retrive all characters
-router.get("/", async (ctx) => {
+router.get("/", authUser, async (ctx) => {
   try {
     const characters = await prisma.character.findMany();
     ctx.status = 201;
@@ -23,7 +24,7 @@ router.get("/", async (ctx) => {
 });
 
 // POST /: create a character
-router.post("/", async (ctx) => {
+router.post("/", authUser, async (ctx) => {
   try {
     ctx.request.body = characterSchema.parse(ctx.request.body);
     const data = ctx.request.body as Character;
@@ -59,7 +60,7 @@ router.post("/", async (ctx) => {
 });
 
 // GET /:id: get single character
-router.get("/:id", async (ctx) => {
+router.get("/:id", authUser, async (ctx) => {
   const id = ctx.params.id;
 
   try {
@@ -84,7 +85,7 @@ router.get("/:id", async (ctx) => {
 });
 
 // PATCH /:id: update single character
-router.patch("/:id", characterExists, async (ctx) => {
+router.patch("/:id", authUser, characterExists, async (ctx) => {
   const id = ctx.params.id;
   const data = ctx.request.body as Character;
 
@@ -112,7 +113,7 @@ router.patch("/:id", characterExists, async (ctx) => {
 });
 
 // DELETE /:id: delete single character
-router.delete("/:id", characterExists, async (ctx) => {
+router.delete("/:id", authUser, characterExists, async (ctx) => {
   const id = ctx.params.id;
 
   try {
