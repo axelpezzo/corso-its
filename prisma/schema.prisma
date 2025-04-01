@@ -101,6 +101,25 @@ model Session {
   updatedAt DateTime @updatedAt
 }
 
+model User {
+  id         String      @id @default(uuid())
+  email      String      @unique
+  password   String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  characters Character[]
+  session    Session[]
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  sessionId String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum USER_ROLE {
   ADMIN
   GUEST
