@@ -1,49 +1,44 @@
 import Router from "@koa/router";
 import prisma from "../../prisma/client";
-import { Character } from "@prisma/client";
-import { characterExists } from "../middlewares/middlewareCharacter";
-import { characterSchema } from "../../prisma/validation/validationCharacter";
+import { Attribute } from "@prisma/client";
+import { attributeSchema } from "../../prisma/validation/validationAttribute";
 import { validationError } from "../utilities/errorsHandler";
+import { attributeExists } from "../middlewares/middlewareAttribute";
 import { ZodError } from "zod";
 
 const router = new Router({
-  prefix: "/character",
+  prefix: "/attribute",
 });
 
-// GET /: retrive all characters
+// GET /: retrive all attribute
 router.get("/", async (ctx) => {
   try {
-    const characters = await prisma.character.findMany();
+    const attribute = await prisma.attribute.findMany();
     ctx.status = 201;
-    ctx.body = characters;
+    ctx.body = attribute;
   } catch (error) {
     ctx.status = 500;
     ctx.body = "Error: " + error;
   }
 });
 
-// POST /: create a character
+// POST /: create a attribute
 router.post("/", async (ctx) => {
   try {
-    ctx.request.body = characterSchema.parse(ctx.request.body);
-    const data = ctx.request.body as Character;
+    ctx.request.body = attributeSchema.parse(ctx.request.body);
+    const data = ctx.request.body as Attribute;
 
     try {
-      const character = await prisma.character.create({
+      const attribute = await prisma.attribute.create({
         data: {
           name: data.name,
-          history: data.history,
-          age: data.age,
-          health: data.health,
-          stamina: data.stamina,
-          mana: data.mana,
-          idClass: data.idClass,
-          idRace: data.idRace,
+          key: data.key,
+          value: data.value,
         },
       });
 
       ctx.status = 201;
-      ctx.body = "Character created: " + character.id;
+      ctx.body = "attribute created: " + attribute.id;
     } catch (error) {
       ctx.status = 500;
       ctx.body = "Error: " + error;
@@ -58,24 +53,24 @@ router.post("/", async (ctx) => {
   }
 });
 
-// GET /:id: get single character
+// GET /:id: get single attribute
 router.get("/:id", async (ctx) => {
   const id = ctx.params.id;
 
   try {
-    const character = await prisma.character.findUnique({
+    const attribute = await prisma.attribute.findUnique({
       where: {
         id: id,
       },
     });
 
-    if (!character) {
+    if (!attribute) {
       ctx.status = 404;
-      ctx.body = "Character not found";
+      ctx.body = "Attribute not found";
       return;
     } else {
       ctx.status = 201;
-      ctx.body = character;
+      ctx.body = attribute;
     }
   } catch (error) {
     ctx.status = 500;
@@ -83,28 +78,25 @@ router.get("/:id", async (ctx) => {
   }
 });
 
-// PATCH /:id: update single character
-router.patch("/:id", characterExists, async (ctx) => {
+// PATCH /:id: update single attribute
+router.patch("/:id", attributeExists, async (ctx) => {
   const id = ctx.params.id;
-  const data = ctx.request.body as Character;
+  const data = ctx.request.body as Attribute;
 
   try {
-    const character = await prisma.character.update({
+    const attribute = await prisma.attribute.update({
       where: {
         id: id,
       },
       data: {
         name: data.name,
-        history: data.history,
-        age: data.age,
-        health: data.health,
-        stamina: data.stamina,
-        mana: data.mana,
+        key: data.key,
+        value: data.value,
       },
     });
 
     ctx.status = 201;
-    ctx.body = "Character updated: " + character.id;
+    ctx.body = "Attribute updated: " + attribute.id;
   } catch (error) {
     ctx.status = 500;
     ctx.body = "Error: " + error;
@@ -112,18 +104,18 @@ router.patch("/:id", characterExists, async (ctx) => {
 });
 
 // DELETE /:id: delete single character
-router.delete("/:id", characterExists, async (ctx) => {
+router.delete("/:id", attributeExists, async (ctx) => {
   const id = ctx.params.id;
 
   try {
-    const character = await prisma.character.delete({
+    const attribute = await prisma.attribute.delete({
       where: {
         id: id,
       },
     });
 
     ctx.status = 200;
-    ctx.body = "Character deleted: " + character.id;
+    ctx.body = "Attribute deleted: " + attribute.id;
   } catch (error) {
     ctx.status = 500;
     ctx.body = "Error: " + error;

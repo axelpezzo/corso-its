@@ -1,17 +1,17 @@
 import { Context, Next } from "koa";
 import prisma from "../../prisma/client";
 
-export const characterExists = async (ctx: Context, next: Next) => {
+export const classExists = async (ctx: Context, next: Next) => {
   const id = ctx.params.id;
-  const character = await prisma.character.findUnique({
+  const clazz = await prisma.class.findUnique({
     where: {
       id: id,
     },
   });
 
-  if (!character) {
+  if (!clazz) {
     ctx.status = 404;
-    ctx.body = "Character not found";
+    ctx.body = "Class not found";
   } else {
     await next();
   }

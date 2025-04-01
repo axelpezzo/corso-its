@@ -12,7 +12,91 @@ model Character {
   name    String  @db.VarChar(20)
   history String?
   age     Int?
-  health  Int?
-  stamina Int?
-  mana    Int?
+  health  Int?    @default(100)
+  stamina Int?    @default(100)
+  mana    Int?    @default(100)
+  idRace  String
+  idClass String
+  race    Race    @relation(fields: [idRace], references: [id], onDelete: Cascade)
+  class   Class   @relation(fields: [idClass], references: [id], onDelete: Cascade)
+  User    User?   @relation(fields: [userId], references: [id])
+  userId  String?
+}
+
+model Race {
+  id          String        @id @default(uuid())
+  key         String        @db.VarChar(20)
+  name        String        @db.VarChar(20)
+  modHealth   Int
+  modStamina  Int
+  modMana     Int
+  character   Character[]
+  raceAttrMod RaceAttrMod[]
+}
+
+model RaceAttrMod {
+  race        Race      @relation(fields: [idRace], references: [id], onDelete: Cascade)
+  attribute   Attribute @relation(fields: [idAttribute], references: [id], onDelete: Cascade)
+  idRace      String
+  idAttribute String
+  value       Int
+
+  @@id([idRace, idAttribute])
+}
+
+model Attribute {
+  id          String        @id @default(uuid())
+  key         String        @db.VarChar(20)
+  name        String        @db.VarChar(20)
+  value       Int?          @default(20)
+  skill       Skill[]
+  raceAttrMod RaceAttrMod[]
+}
+
+model Class {
+  id            String          @id @default(uuid())
+  name          String          @db.VarChar(20)
+  key           String          @db.VarChar(20)
+  description   String?
+  character     Character[]
+  classSkillMod ClassSkillMod[]
+}
+
+model ClassSkillMod {
+  skill   Skill  @relation(fields: [idSkill], references: [id], onDelete: Cascade)
+  class   Class  @relation(fields: [idClass], references: [id], onDelete: Cascade)
+  idSkill String
+  idClass String
+  value   Int
+
+  @@id([idSkill, idClass])
+}
+
+model Skill {
+  id            String          @id @default(uuid())
+  name          String          @db.VarChar(20)
+  key           String          @db.VarChar(20)
+  value         Int?            @default(10)
+  idAttribute   String
+  attribute     Attribute       @relation(fields: [idAttribute], references: [id], onDelete: Cascade)
+  classSkillMod ClassSkillMod[]
+}
+
+model User {
+  id         String      @id @default(uuid())
+  email      String      @unique
+  password   String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  characters Character[]
+  session    Session[]
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  sessionId String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
