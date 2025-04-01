@@ -3,8 +3,8 @@ import prisma from "../../prisma/client";
 import { RaceAttrMod } from "@prisma/client";
 import { RaceAttrModSchema } from "../../prisma/validation/validationRaceAttrMod";
 import { validationError } from "../utilities/errorsHandler";
+import { raceAttrModExsist } from "../middlewares/middlewareRaceAttrMod";
 import { ZodError } from "zod";
-import { error } from "console";
 
 const router = new Router();
 
@@ -43,6 +43,11 @@ router.get("/race/:idRace/attr/:idAttribute", async (ctx) => {
         }
       },
     });
+
+    if (!raceAttrMod) {
+      ctx.status = 404;
+      ctx.body = "raceAttribute not found";
+    }
 
     ctx.status = 200;
     ctx.body = raceAttrMod;
@@ -104,7 +109,7 @@ router.post("/race/:idRace/attr/:idAttribute", async (ctx) => {
 });
 
 // PATCH /: update a raceAttrMod
-router.patch("/race/:idRace/attr/:idAttribute", async (ctx) => {
+router.patch("/race/:idRace/attr/:idAttribute", raceAttrModExsist, async (ctx) => {
   try {
     ctx.request.body = RaceAttrModSchema.parse(ctx.request.body);
     const data = ctx.request.body as RaceAttrMod;
@@ -153,7 +158,7 @@ router.patch("/race/:idRace/attr/:idAttribute", async (ctx) => {
 })
 
 // DELETE /: delete a raceAttrMod
-router.delete("/race/:idRace/attr/:idAttribute", async (ctx) => {
+router.delete("/race/:idRace/attr/:idAttribute", raceAttrModExsist, async (ctx) => {
   try {
     ctx.request.body = RaceAttrModSchema.parse(ctx.request.body);
     const data = ctx.request.body as RaceAttrMod;
