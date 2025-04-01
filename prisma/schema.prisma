@@ -19,6 +19,8 @@ model Character {
   idClass String
   race    Race    @relation(fields: [idRace], references: [id], onDelete: Cascade)
   class   Class   @relation(fields: [idClass], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userid], references: [id])
+  userid  String
 }
 
 model Race {
@@ -78,4 +80,23 @@ model Skill {
   idAttribute   String
   attribute     Attribute       @relation(fields: [idAttribute], references: [id], onDelete: Cascade)
   classSkillMod ClassSkillMod[]
+}
+
+model User{
+  id          String   @id @default(uuid())
+  email       String   @unique 
+  password    String  
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+  characters  Character[]
+  session     Session[]
+}
+
+model Session {
+  id          String   @id @default(uuid())
+  sessionId   String   @unique
+  userid      String
+  user        User     @relation(fields: [userid], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
 }
