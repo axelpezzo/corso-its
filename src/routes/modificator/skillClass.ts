@@ -4,30 +4,30 @@ import { USER_ROLE } from "@prisma/client";
 import { authUser, userRole } from "../../middlewares/middlewareAuth";
 
 const router = new Router({
-  prefix: "/skills/of/class"
+  prefix: "/mod/class",
 });
 
-// GET /skills/of/class/:id: get single class with relative skills
+// GET /mod/class/:idClass/skill: get single class with relative skills
 router.get(
-  "/:id",
+  "/:idClass/skill",
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
-    const id = ctx.params.id;
+    const idClass = ctx.params.idClass;
 
     try {
       const clazz = await prisma.classSkillMod.findMany({
         where: {
-          idClass: id,
+          idClass,
         },
-        include:{
-          skill:true
-        }
+        include: {
+          skill: true,
+        },
       });
 
       if (!clazz) {
         ctx.status = 404;
-        ctx.body = { error: "class not found"};
+        ctx.body = { error: "class not found" };
         return;
       } else {
         ctx.status = 201;

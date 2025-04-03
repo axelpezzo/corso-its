@@ -11,9 +11,6 @@ import bodyParser from "koa-bodyparser";
 import userRouter from "./routes/user";
 import meRouter from "./routes/me";
 import classSkillModRoutes from "./routes/classSkillMod";
-import attributeWithSkillsRoutes from "./routes/mods/attributeWithSkills";
-import raceWithAttributesRoutes from "./routes/mods/attributesOfRace";
-import classWithSkillsRoutes from "./routes/mods/skillsOfClass";
 
 // Init "dotenv"
 dotenv.config();
@@ -26,10 +23,6 @@ app.use(bodyParser());
 router.get("/", (ctx) => {
   ctx.response.body = "GDR Node";
 });
-
-app.use(attributeWithSkillsRoutes.routes()).use(attributeWithSkillsRoutes.allowedMethods());
-app.use(raceWithAttributesRoutes.routes()).use(raceWithAttributesRoutes.allowedMethods());
-app.use(classWithSkillsRoutes.routes()).use(classWithSkillsRoutes.allowedMethods());
 
 app.use(characterRoutes.routes()).use(characterRoutes.allowedMethods());
 app.use(attributeRoutes.routes()).use(attributeRoutes.allowedMethods());

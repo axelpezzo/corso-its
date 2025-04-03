@@ -4,30 +4,30 @@ import { USER_ROLE } from "@prisma/client";
 import { authUser, userRole } from "../../middlewares/middlewareAuth";
 
 const router = new Router({
-  prefix: "/attributes/of/race",
+  prefix: "/mod/race",
 });
 
-// GET /attributes/of/race/:id get a race with relative attributes
+// GET /mod/race/:id/attrb get a race with relative attributes
 router.get(
-  "/:id",
+  "/:idRace/attrb",
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
-    const id = ctx.params.id;
+    const idRace = ctx.params.idRace;
 
     try {
       const race = await prisma.raceAttrMod.findMany({
         where: {
-          idRace: id,
+          idRace,
         },
-        include:{
+        include: {
           attribute: true,
         },
       });
 
       if (!race) {
         ctx.status = 404;
-        ctx.body = { error: "Race not found"};
+        ctx.body = { error: "Race not found" };
         return;
       } else {
         ctx.status = 201;
