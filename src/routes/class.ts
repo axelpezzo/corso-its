@@ -65,7 +65,7 @@ router.get(
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Class'
+ *             $ref: '#/components/schemas/ClassInput'
  *     responses:
  *       201:
  *         description: Classe creata con successo
@@ -289,6 +289,36 @@ router.delete(
  *         id:
  *           type: string
  *           description: L'ID univoco della classe
+ *         name:
+ *           type: string
+ *           description: Il nome della classe
+ *         key:
+ *           type: string
+ *           description: La chiave univoca della classe
+ *         description:
+ *           type: string
+ *           description: Descrizione della classe
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: La data di creazione della classe
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           description: La data dell'ultimo aggiornamento della classe
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     ClassInput:
+ *       type: object
+ *       required:
+ *         - name
+ *         - key
+ *         - description
+ *       properties:
  *         name:
  *           type: string
  *           description: Il nome della classe
