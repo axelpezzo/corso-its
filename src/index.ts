@@ -11,16 +11,10 @@ import bodyParser from "koa-bodyparser";
 import classSkillModRoutes from "./routes/classSkillMod";
 import swaggerJSDoc from "swagger-jsdoc";
 import { koaSwagger } from "koa2-swagger-ui";
-import path from "path";
-import { fileURLToPath } from "url";
 
 
 
 dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 
 const app = new Koa();
 const router = new Router();
@@ -40,7 +34,7 @@ const options = {
       },
     ],
   },
-  apis: [path.join(__dirname, "routes/*.ts")],
+  apis: ["src/routes/*.ts"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
