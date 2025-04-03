@@ -13,6 +13,9 @@
     "lint": "eslint ./src",
     "test": "docker-compose -f docker-compose.yml up --build && npx prisma migrate dev --name latest"
   },
+  "prisma": {
+    "seed": "tsx prisma/seeder/seeder.ts"
+  },
   "dependencies": {
     "@koa/router": "^13.1.0",
     "@prisma/client": "^6.5.0",
