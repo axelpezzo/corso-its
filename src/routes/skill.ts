@@ -10,6 +10,20 @@ const router = new Router({
   prefix: "/skill",
 });
 
+/**
+ * @swagger
+ * /skill:
+ *   get:
+ *     summary: Retrieve all skills
+ *     tags: [Skill]
+ *     responses:
+ *       200:
+ *         description: A list of skills.
+ *       500:
+ *         description: Internal server error.
+ */
+
+
 // GET /: retrieve all skills
 router.get("/", async (ctx) => {
   try {
@@ -21,6 +35,34 @@ router.get("/", async (ctx) => {
     ctx.body = "Error: " + error;
   }
 });
+
+/**
+ * @swagger
+ * /skill:
+ *   post:
+ *     summary: Create a new skill
+ *     tags: [Skill]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               key:
+ *                 type: string
+ *               value:
+ *                 type: integer
+ *               idAttribute:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Skill created.
+ *       500:
+ *         description: Internal server error.
+ */
 
 // POST /: create a skill
 router.post("/", async (ctx) => {
@@ -54,6 +96,27 @@ router.post("/", async (ctx) => {
   }
 });
 
+/**
+ * @swagger
+ * /skill/{id}:
+ *   get:
+ *     summary: Get a single skill
+ *     tags: [Skill]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Skill found.
+ *       404:
+ *         description: Skill not found.
+ *       500:
+ *         description: Internal server error.
+ */
+
 // GET /:id: get single skill
 router.get("/:id", async (ctx) => {
   const id = ctx.params.id;
@@ -78,6 +141,40 @@ router.get("/:id", async (ctx) => {
     ctx.body = "Error: " + error;
   }
 });
+
+/**
+ * @swagger
+ * /skill/{id}:
+ *   patch:
+ *     summary: Update a skill
+ *     tags: [Skill]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               key:
+ *                 type: string
+ *               value:
+ *                 type: integer
+ *               idAttribute:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Skill updated.
+ *       500:
+ *         description: Internal server error.
+ */
 
 // PATCH /:id: update single skill
 router.patch("/:id", skillExists, async (ctx) => {
@@ -104,6 +201,25 @@ router.patch("/:id", skillExists, async (ctx) => {
     ctx.body = "Error: " + error;
   }
 });
+
+/**
+ * @swagger
+ * /skill/{id}:
+ *   delete:
+ *     summary: Delete a skill
+ *     tags: [Skill]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Skill deleted.
+ *       500:
+ *         description: Internal server error.
+ */
 
 // DELETE /:id: delete single skill
 router.delete("/:id", skillExists, async (ctx) => {
