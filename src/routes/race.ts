@@ -11,11 +11,30 @@ const router = new Router({
   prefix: "/race",
 });
 
+/**
+ * @swagger
+ * /race:
+ *   get:
+ *     summary: Retrieve all races
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Race
+ *     responses:
+ *       200:
+ *         description: A list of races.
+ *        content:
+ *          application/json:
+ *            schema:
+ *       500:
+ *         description: Server error.
+ */
+
 // GET /: retrive all race
 router.get(
   "/",
   authUser,
-  (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
+  (ctx, next) => userRole(ctx, next, USER_ROLE.GUEST),
   async (ctx) => {
     try {
       const races = await prisma.race.findMany();
@@ -28,6 +47,27 @@ router.get(
   }
 );
 
+/**
+ * @swagger
+ * /race:
+ *   post:
+ *     summary: Create a new race
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Race
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/RaceInput'
+ *     responses:
+ *       201:
+ *         description: Race created.
+ *       500:
+ *         description: Server error.
+ */
 // POST /: create a race
 router.post(
   "/",
@@ -66,6 +106,29 @@ router.post(
   }
 );
 
+/**
+ * @swagger
+ * /race/{id}:
+ *   get:
+ *     summary: Get a single race by ID
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Race
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A single race object.
+ *       404:
+ *         description: Race not found.
+ *       500:
+ *         description: Server error.
+ */
 // GET /:id: get single race
 router.get(
   "/:id",
@@ -96,6 +159,35 @@ router.get(
   }
 );
 
+/**
+ * @swagger
+ * /race/{id}:
+ *   patch:
+ *     summary: Update a single race
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Race
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Race'
+ *     responses:
+ *       200:
+ *         description: Race updated.
+ *       404:
+ *         description: Race not found.
+ *       500:
+ *         description: Server error.
+ */
 // PATCH /:id: update single race
 router.patch(
   "/:id",
@@ -129,6 +221,29 @@ router.patch(
   }
 );
 
+/**
+ * @swagger
+ * /race/{id}:
+ *   delete:
+ *     summary: Delete a single race
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Race
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Race deleted.
+ *       404:
+ *         description: Race not found.
+ *       500:
+ *         description: Server error.
+ */
 // DELETE /:id: delete single race
 router.delete(
   "/:id",
@@ -155,3 +270,54 @@ router.delete(
 );
 
 export default router;
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Race:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: "123e4567-e89b-12d3-a456-426614174000"
+ *         name:
+ *           type: string
+ *           example: "Higth Elf"
+ *         key:
+ *           type: string
+ *           example: "hight_elf"
+ *         modHealth:
+ *           type: integer
+ *           example: 10
+ *         modStamina:
+ *           type: integer
+ *           example: 8
+ *         modMana:
+ *           type: integer
+ *           example: 12
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     RaceInput:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           example: "Higth Elf"
+ *         key:
+ *           type: string
+ *           example: "hight_elf"
+ *         modHealth:
+ *           type: integer
+ *           example: 10
+ *         modStamina:
+ *           type: integer
+ *           example: 8
+ *         modMana:
+ *           type: integer
+ *           example: 12
+ */
