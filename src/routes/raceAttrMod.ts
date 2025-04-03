@@ -225,7 +225,7 @@ router.delete(
 
 // GET /race/:idRace/attr get a race with relative attributes
 router.get(
-  "race/:idRace/attr",
+  "/race/:idRace/attr",
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
