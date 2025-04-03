@@ -11,8 +11,6 @@ import bodyParser from "koa-bodyparser";
 import userRouter from "./routes/user";
 import meRouter from "./routes/me";
 import classSkillModRoutes from "./routes/classSkillMod";
-import swaggerJSDoc from "swagger-jsdoc";
-import { koaSwagger } from 'koa2-swagger-ui';
 
 
 // Init "dotenv"
@@ -26,35 +24,6 @@ app.use(bodyParser());
 router.get("/", (ctx) => {
   ctx.response.body = "GDR Node";
 });
-
-const swaggerOptions = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Documentazione DGR Node',
-      version: '1.0.0'
-    },
-    servers: [
-      {
-          url: `http://localhost:${process.env.APP_PORT || 3000}`,
-      },
-    ],
-  },
-  apis: ['./src/routes/*.ts']
-}
-
-const swaggerSpec= swaggerJSDoc(swaggerOptions);
-
-router.get("/swagger.json", (ctx) => {
-  ctx.response.body = swaggerSpec
-});
-
-app.use(koaSwagger({
-  routePrefix: "/docs",
-  swaggerOptions: {
-    url: '/swagger.json'
-  }
-}));
 
 app.use(characterRoutes.routes()).use(characterRoutes.allowedMethods());
 app.use(attributeRoutes.routes()).use(attributeRoutes.allowedMethods());
