@@ -12,8 +12,8 @@ import userRouter from "./routes/user";
 import meRouter from "./routes/me";
 import classSkillModRoutes from "./routes/classSkillMod";
 import attributeWithSkillsRoutes from "./routes/mods/attributeWithSkills";
-import raceWithAttributesRoutes from "./routes/mods/raceWithAttributes";
-import classWithSkillsRoutes from "./routes/mods/classWithSkills";
+import raceWithAttributesRoutes from "./routes/mods/attributesOfRace";
+import classWithSkillsRoutes from "./routes/mods/skillsOfClass";
 
 // Init "dotenv"
 dotenv.config();

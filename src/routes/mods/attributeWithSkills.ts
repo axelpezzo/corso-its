@@ -2,7 +2,6 @@ import Router from "@koa/router";
 import prisma from "../../../prisma/client";
 import { USER_ROLE } from "@prisma/client";
 import { authUser, userRole } from "../../middlewares/middlewareAuth";
-import { error } from "console";
 
 const router = new Router({
   prefix: "/attribute",
