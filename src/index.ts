@@ -38,8 +38,6 @@ app.use(router.routes()).use(router.allowedMethods());
 
 app.listen(process.env.APP_PORT || 3000, () => {
   console.log(
-    `Server running --> http://localhost:${process.env.APP_PORT || 3000}\n`
-    +
-    `Docs section --> http://localhost:${process.env.APP_PORT || 3000}/docs`
+    `Server running --> http://localhost:${process.env.APP_PORT || 3000}`
   );
 });
