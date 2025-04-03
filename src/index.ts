@@ -11,6 +11,8 @@ import bodyParser from "koa-bodyparser";
 import userRouter from "./routes/user";
 import meRouter from "./routes/me";
 import classSkillModRoutes from "./routes/classSkillMod";
+import { swaggerSpec } from './doc/swagger';
+import { koaSwagger } from 'koa2-swagger-ui';
 
 // Init "dotenv"
 dotenv.config();
@@ -19,6 +21,20 @@ const app = new Koa();
 const router = new Router();
 
 app.use(bodyParser());
+
+console.log(swaggerSpec)
+
+//router.get('/swagger-json', koaSwagger({ swaggerOptions: { spec: swaggerSpec as Record<string, unknown> }}));
+router.get('/swagger', (ctx) => {
+  ctx.response.body = swaggerSpec;
+});
+
+app.use(koaSwagger({
+  routePrefix: '/docs',
+  swaggerOptions: {
+    url: '/swagger'
+  }
+}))
 
 router.get("/", (ctx) => {
   ctx.response.body = "GDR Node";
