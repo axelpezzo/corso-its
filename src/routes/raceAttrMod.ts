@@ -79,6 +79,9 @@ router.get(
  *                $ref: '#/components/schemas/RaceAttrMod'
  *        400:
  *          description: Bad request, missing parameters
+ *        401:
+ *          description: Unauthorized operation
+ *          $ref: '#/components/responses/UnauthorizedError'
  *        404:
  *          description: Race Attribute Modifier not found
  *        500:
@@ -165,6 +168,9 @@ router.get(
  *          description: Race Attribute Modifier created successfully
  *        400:
  *          description: Bad request, missing parameters
+ *        401:
+ *          description: Unauthorized operation
+ *          $ref: '#/components/responses/UnauthorizedError'
  *        500:
  *          description: Internal server error
  */
@@ -253,6 +259,9 @@ router.post(
  *          description: Race Attribute Modifier updated successfully
  *        400:
  *          description: Bad request, missing parameters
+ *        401:
+ *          description: Unauthorized operation
+ *          $ref: '#/components/responses/UnauthorizedError'
  *        500:
  *          description: Internal server error
  */
@@ -336,6 +345,9 @@ router.patch(
  *          description: Race Attribute Modifier deleted successfully
  *        400:
  *          description: Bad request, missing parameters
+ *        401:
+ *          description: Unauthorized operation
+ *          $ref: '#/components/responses/UnauthorizedError'
  *        500:
  *          description: Internal server error
  */
@@ -407,6 +419,22 @@ router.delete(
  *          - idRace
  *          - idAttribute
  *          - value
- */
+ *      securitySchemes:
+ *        cookieAuth:
+ *          type: apiKey
+ *          in: cookie
+ *          name: sessionId
+ *      responses:
+ *        UnauthorizedError:
+ *          description: Access token is missing or invalid
+ *          content:
+ *           application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "Unauthorized access"
+ */ 
 
 export default router;
