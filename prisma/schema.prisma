@@ -19,6 +19,8 @@ model Character {
   idClass String
   race    Race    @relation(fields: [idRace], references: [id], onDelete: Cascade)
   class   Class   @relation(fields: [idClass], references: [id], onDelete: Cascade)
+  User    User?   @relation(fields: [userId], references: [id])
+  userId  String?
 }
 
 model Race {
