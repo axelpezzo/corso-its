@@ -8,13 +8,15 @@ import classRoutes from "./routes/class";
 import skillRoutes from "./routes/skill";
 import raceRoute from "./routes/race";
 import bodyParser from "koa-bodyparser";
+import userRouter from "./routes/user";
+import meRouter from "./routes/me";
 import classSkillModRoutes from "./routes/classSkillMod";
 import swaggerJSDoc from "swagger-jsdoc";
-import { koaSwagger } from "koa2-swagger-ui";
-
-
+import { version } from "os";
+import {koaSwagger} from "koa2-swagger-ui";
 
 dotenv.config();
+
 
 const app = new Koa();
 const router = new Router();
@@ -54,6 +56,34 @@ app.use(
 
 app.use(bodyParser());
 
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Documentazione GDR node API",
+      version: "1.0.0",
+    }
+  },
+  apis: ['./src/routes/*.ts']
+}
+
+const swaggerSpec = swaggerJSDoc(options);
+console.log(swaggerSpec);
+
+router.get('/swagger.json', (ctx) => {
+  ctx.response.body = swaggerSpec;
+});
+
+app.use(koaSwagger({
+  routePrefix: '/docs',
+  swaggerOptions: {
+    url: '/swagger.json',
+  }
+}))
+
+
+
+
 router.get("/", (ctx) => {
   ctx.response.body = "GDR Node";
 });
@@ -65,7 +95,9 @@ app.use(classSkillModRoutes.routes()).use(classSkillModRoutes.allowedMethods());
 app.use(raceAttrModRoutes.routes()).use(raceAttrModRoutes.allowedMethods());
 app.use(classRoutes.routes()).use(classRoutes.allowedMethods());
 app.use(skillRoutes.routes()).use(skillRoutes.allowedMethods());
+app.use(userRouter.routes()).use(userRouter.allowedMethods());
 app.use(raceRoute.routes()).use(raceRoute.allowedMethods());
+app.use(meRouter.routes()).use(meRouter.allowedMethods());
 app.use(router.routes()).use(router.allowedMethods());
 
 app.listen(process.env.APP_PORT || 3000, () => {

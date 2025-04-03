@@ -1,10 +1,11 @@
 import Router from "@koa/router";
 import prisma from "../../prisma/client";
-import { Skill } from "@prisma/client";
+import { Skill, USER_ROLE } from "@prisma/client";
 import { skillExists } from "../middlewares/middlewareSkill";
 import { skillSchema } from "../../prisma/validation/validationSkill";
 import { validationError } from "../utilities/errorsHandler";
 import { ZodError } from "zod";
+import { authUser, userRole } from "../middlewares/middlewareAuth";
 
 const router = new Router({
   prefix: "/skill",
@@ -65,20 +66,24 @@ router.get("/", async (ctx) => {
  */
 
 // POST /: create a skill
-router.post("/", async (ctx) => {
-  try {
-    ctx.request.body = skillSchema.parse(ctx.request.body);
-    const data = ctx.request.body as Skill;
-
+router.post(
+  "/",
+  authUser,
+  (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
+  async (ctx) => {
     try {
-      const skill = await prisma.skill.create({
-        data: {
-          name: data.name,
-          key: data.key,
-          value: data.value,
-          idAttribute: data.idAttribute,
-        },
-      });
+      ctx.request.body = skillSchema.parse(ctx.request.body);
+      const data = ctx.request.body as Skill;
+
+      try {
+        const skill = await prisma.skill.create({
+          data: {
+            name: data.name,
+            key: data.key,
+            value: data.value,
+            idAttribute: data.idAttribute,
+          },
+        });
 
       ctx.status = 201;
       ctx.body = "Skill created: " + skill.id;
@@ -118,15 +123,19 @@ router.post("/", async (ctx) => {
  */
 
 // GET /:id: get single skill
-router.get("/:id", async (ctx) => {
-  const id = ctx.params.id;
+router.get(
+  "/:id",
+  authUser,
+  (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
+  async (ctx) => {
+    const id = ctx.params.id;
 
-  try {
-    const skill = await prisma.skill.findUnique({
-      where: {
-        id: id,
-      },
-    });
+    try {
+      const skill = await prisma.skill.findUnique({
+        where: {
+          id: id,
+        },
+      });
 
     if (!skill) {
       ctx.status = 404;
@@ -177,22 +186,27 @@ router.get("/:id", async (ctx) => {
  */
 
 // PATCH /:id: update single skill
-router.patch("/:id", skillExists, async (ctx) => {
-  const id = ctx.params.id;
-  const data = ctx.request.body as Skill;
+router.patch(
+  "/:id",
+  authUser,
+  (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
+  skillExists,
+  async (ctx) => {
+    const id = ctx.params.id;
+    const data = ctx.request.body as Skill;
 
-  try {
-    const skill = await prisma.skill.update({
-      where: {
-        id: id,
-      },
-      data: {
-        name: data.name,
-        key: data.key,
-        value: data.value,
-        idAttribute: data.idAttribute,
-      },
-    });
+    try {
+      const skill = await prisma.skill.update({
+        where: {
+          id: id,
+        },
+        data: {
+          name: data.name,
+          key: data.key,
+          value: data.value,
+          idAttribute: data.idAttribute,
+        },
+      });
 
     ctx.status = 200;
     ctx.body = "Skill updated: " + skill.id;
@@ -222,22 +236,28 @@ router.patch("/:id", skillExists, async (ctx) => {
  */
 
 // DELETE /:id: delete single skill
-router.delete("/:id", skillExists, async (ctx) => {
-  const id = ctx.params.id;
+router.delete(
+  "/:id",
+  authUser,
+  (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
+  skillExists,
+  async (ctx) => {
+    const id = ctx.params.id;
 
-  try {
-    const skill = await prisma.skill.delete({
-      where: {
-        id: id,
-      },
-    });
+    try {
+      const skill = await prisma.skill.delete({
+        where: {
+          id: id,
+        },
+      });
 
-    ctx.status = 200;
-    ctx.body = "Skill deleted: " + skill.id;
-  } catch (error) {
-    ctx.status = 500;
-    ctx.body = "Error: " + error;
+      ctx.status = 200;
+      ctx.body = "Skill deleted: " + skill.id;
+    } catch (error) {
+      ctx.status = 500;
+      ctx.body = "Error: " + error;
+    }
   }
-});
+);
 
 export default router;
