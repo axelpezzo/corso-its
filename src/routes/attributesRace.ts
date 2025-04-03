@@ -5,26 +5,26 @@ import { authUser, userRole } from "../middlewares/middlewareAuth";
 
 const router = new Router();
 
-// GET /class/:classId/skill/mod: ottenere tutti i modificatori di skill per ogni classe
+// GET /race/:raceId/attribute/mod: ottenere tutti i modificatori degli attributi per ogni razza
 router.get(
-  "/class/:classId/skill/mod",
+  "/race/:raceId/attribute/mod",
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
     try {
-      const classId = ctx.params // Sostituisci con l'ID reale
+      const raceId = ctx.params // Sostituisci con l'ID reale
 
-      const skillModsForClass = await prisma.classSkillMod.findMany({
+      const attributeModsForRace = await prisma.raceAttrMod.findMany({
         where: {
-          idClass: classId, // Filtra per l'ID della classe
+          idRace: raceId, // Filtra per l'ID della razza
         },
         include: {
-          skill: true, // Include i dettagli della skill
+          attribute: true, // Include i dettagli degli attributi
         },
       });
 
       ctx.status = 200;
-      ctx.body = skillModsForClass;
+      ctx.body = attributeModsForRace;
     } catch (error) {
       ctx.status = 500;
       ctx.body = "Errore: " + error;
