@@ -11,8 +11,11 @@ import bodyParser from "koa-bodyparser";
 import userRouter from "./routes/user";
 import meRouter from "./routes/me";
 import classSkillModRoutes from "./routes/classSkillMod";
+
 import { swaggerSpec } from './doc/swagger';
 import { koaSwagger } from 'koa2-swagger-ui';
+import swaggerJSDoc from "swagger-jsdoc";
+import { version } from "os";
 
 // Init "dotenv"
 dotenv.config();
@@ -25,14 +28,14 @@ app.use(bodyParser());
 console.log(swaggerSpec)
 
 //router.get('/swagger-json', koaSwagger({ swaggerOptions: { spec: swaggerSpec as Record<string, unknown> }}));
-router.get('/swagger', (ctx) => {
+router.get('/swagger.json', (ctx) => {
   ctx.response.body = swaggerSpec;
 });
 
 app.use(koaSwagger({
   routePrefix: '/docs',
   swaggerOptions: {
-    url: '/swagger'
+    url: '/swagger.json',
   }
 }))
 
