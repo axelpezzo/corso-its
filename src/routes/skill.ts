@@ -24,7 +24,6 @@ const router = new Router({
  *         description: Internal server error.
  */
 
-
 // GET /: retrieve all skills
 router.get("/", async (ctx) => {
   try {
@@ -75,15 +74,18 @@ router.post(
       ctx.request.body = skillSchema.parse(ctx.request.body);
       const data = ctx.request.body as Skill;
 
-      try {
-        const skill = await prisma.skill.create({
-          data: {
-            name: data.name,
-            key: data.key,
-            value: data.value,
-            idAttribute: data.idAttribute,
+      // Gestione dell'attributo tramite connect o create
+      const skill = await prisma.skill.create({
+        data: {
+          name: data.name,
+          key: data.key,
+          value: data.value,
+          attribute: {
+            connect: data.idAttribute ? { id: data.idAttribute } : undefined, // Connetti l'attributo esistente
+            create: !data.idAttribute ? { key: "default_key", name: "Default Attribute", value: 0 } : undefined, // Crea un attributo se idAttribute non è fornito
           },
-        });
+        },
+      });
 
       ctx.status = 201;
       ctx.body = "Skill created: " + skill.id;
@@ -91,15 +93,8 @@ router.post(
       ctx.status = 500;
       ctx.body = "Error: " + error;
     }
-  } catch (error) {
-    ctx.status = 500;
-    if (error instanceof ZodError) {
-      ctx.body = validationError(error);
-    } else {
-      ctx.body = "Generic Error: " + error;
-    }
   }
-});
+);
 
 /**
  * @swagger
@@ -137,19 +132,20 @@ router.get(
         },
       });
 
-    if (!skill) {
-      ctx.status = 404;
-      ctx.body = "Skill not found";
-      return;
-    } else {
-      ctx.status = 200;
-      ctx.body = skill;
+      if (!skill) {
+        ctx.status = 404;
+        ctx.body = "Skill not found";
+        return;
+      } else {
+        ctx.status = 200;
+        ctx.body = skill;
+      }
+    } catch (error) {
+      ctx.status = 500;
+      ctx.body = "Error: " + error;
     }
-  } catch (error) {
-    ctx.status = 500;
-    ctx.body = "Error: " + error;
   }
-});
+);
 
 /**
  * @swagger
@@ -204,17 +200,21 @@ router.patch(
           name: data.name,
           key: data.key,
           value: data.value,
-          idAttribute: data.idAttribute,
+          attribute: {
+            connect: data.idAttribute ? { id: data.idAttribute } : undefined, // Connetti l'attributo esistente
+            create: !data.idAttribute ? { key: "default_key", name: "Default Attribute", value: 0 } : undefined, // Crea un attributo se idAttribute non è fornito
+          },
         },
       });
 
-    ctx.status = 200;
-    ctx.body = "Skill updated: " + skill.id;
-  } catch (error) {
-    ctx.status = 500;
-    ctx.body = "Error: " + error;
+      ctx.status = 200;
+      ctx.body = "Skill updated: " + skill.id;
+    } catch (error) {
+      ctx.status = 500;
+      ctx.body = "Error: " + error;
+    }
   }
-});
+);
 
 /**
  * @swagger
@@ -256,6 +256,40 @@ router.delete(
     } catch (error) {
       ctx.status = 500;
       ctx.body = "Error: " + error;
+    }
+  }
+);
+
+router.get(
+  "/attribute/:id",
+  authUser,
+  (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
+  async (ctx) => {
+    const { id } = ctx.params;
+
+    try {
+      const skills = await prisma.skill.findMany({
+        where: {
+          idAttribute: id,
+        },
+      });
+
+      if (!skills.length) {
+        ctx.status = 404;
+        ctx.body = { message: "Nessuna skill trovata" };
+        return;
+      }
+
+      ctx.status = 200;
+      ctx.body = skills;
+    } catch (error) {
+      if (error instanceof Error) {
+        ctx.status = 500;
+        ctx.body = { error: "Errore interno del server", details: error.message };
+      } else {
+        ctx.status = 500;
+        ctx.body = { error: "Errore sconosciuto" };
+      }
     }
   }
 );
