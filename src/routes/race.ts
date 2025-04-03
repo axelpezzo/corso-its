@@ -34,7 +34,7 @@ const router = new Router({
 router.get(
   "/",
   authUser,
-  (ctx, next) => userRole(ctx, next, USER_ROLE.GUEST),
+  (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
     try {
       const races = await prisma.race.findMany();
