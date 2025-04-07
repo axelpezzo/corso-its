@@ -58,7 +58,6 @@ router.get("/", (ctx) => {
   ctx.response.body = "GDR Node";
 });
 
-
 app.use(characterRoutes.routes()).use(characterRoutes.allowedMethods());
 app.use(attributeRoutes.routes()).use(attributeRoutes.allowedMethods());
 app.use(classSkillModRoutes.routes()).use(classSkillModRoutes.allowedMethods());
@@ -72,6 +71,8 @@ app.use(router.routes()).use(router.allowedMethods());
 
 app.listen(process.env.APP_PORT || 3000, () => {
   console.log(
-    `HTTP Server running on http://localhost:${process.env.APP_PORT}`
+    `Server running --> http://localhost:${process.env.APP_PORT || 3000}\n`
+    +
+    `Docs section --> http://localhost:${process.env.APP_PORT || 3000}/docs`
   );
 });

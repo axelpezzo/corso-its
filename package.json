@@ -36,6 +36,7 @@
     "@types/koa-bodyparser": "^4.3.12",
     "@types/node": "^22.13.13",
     "@types/pg": "^8.11.11",
+    "@types/swagger-jsdoc": "^6.0.4",
     "eslint": "^9.23.0",
     "globals": "^16.0.0",
     "nodemon": "^3.1.9",
