@@ -145,7 +145,6 @@ async function main() {
       },
     ],
   });
-  console.log("Skills created!" + skills);
 
   // Creazione di modificatori di razza-attributo
   await prisma.raceAttrMod.createMany({
