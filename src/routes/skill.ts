@@ -20,9 +20,16 @@ const router = new Router({
  *     responses:
  *       200:
  *         description: A list of skills.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: "#/components/schemas/Skill"
  *       500:
  *         description: Internal server error.
  */
+
 
 // GET /: retrieve all skills
 router.get(
@@ -53,22 +60,18 @@ router.get(
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               key:
- *                 type: string
- *               value:
- *                 type: integer
- *               idAttribute:
- *                 type: string
+ *             $ref: "#/components/schemas/Skill"
  *     responses:
  *       201:
  *         description: Skill created.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Skill"
  *       500:
  *         description: Internal server error.
  */
+
 
 // POST /: create a skill
 router.post(
@@ -117,11 +120,16 @@ router.post(
  *     responses:
  *       200:
  *         description: Skill found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Skill"
  *       404:
  *         description: Skill not found.
  *       500:
  *         description: Internal server error.
  */
+
 
 // GET /:id: get single skill
 router.get(
@@ -170,19 +178,14 @@ router.get(
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               key:
- *                 type: string
- *               value:
- *                 type: integer
- *               idAttribute:
- *                 type: string
+ *             $ref: "#/components/schemas/Skill"
  *     responses:
  *       200:
  *         description: Skill updated.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Skill"
  *       500:
  *         description: Internal server error.
  */
@@ -237,9 +240,14 @@ router.patch(
  *     responses:
  *       200:
  *         description: Skill deleted.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: string
  *       500:
  *         description: Internal server error.
  */
+
 
 // DELETE /:id: delete single skill
 router.delete(
@@ -265,6 +273,34 @@ router.delete(
     }
   }
 );
+
+/**
+ * @swagger
+ * /skill/attribute/{id}:
+ *   get:
+ *     summary: Retrieve all skills associated with a given attribute
+ *     tags: [Skill]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A list of skills.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: "#/components/schemas/Skill"
+ *       404:
+ *         description: No skills found.
+ *       500:
+ *         description: Internal server error.
+ */
+
 
 router.get(
   "/attribute/:id",
@@ -301,3 +337,28 @@ router.get(
 );
 
 export default router;
+
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Skill:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The skill ID.
+ *         name:
+ *           type: string
+ *           description: The skill name.
+ *         key:
+ *           type: string
+ *           description: The skill key.
+ *         value:
+ *           type: integer
+ *           description: The value name.
+ *         idAttribute:
+ *           type: string
+ *           description: The attribute id.
+ */
