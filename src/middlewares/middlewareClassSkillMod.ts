@@ -1,6 +1,5 @@
 import { Context, Next } from "koa";
 import prisma from "../../prisma/client";
-import { classSkillModSchema } from "../../prisma/validation/validationClassSkillMod";
 
 export const classSkillModExists = async (ctx: Context, next: Next) => {
     const idClass = ctx.params.idClass;
@@ -24,7 +23,9 @@ export const classSkillModExists = async (ctx: Context, next: Next) => {
 
         if (!data) {
             ctx.status = 404;
-            ctx.body = "not found";
+            ctx.body = "mod with idClass: "+ idClass +
+                       " and idSkill: "+ idSkill+ 
+                       " not found";
             return;
         } else {
             next();

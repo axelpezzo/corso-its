@@ -19,10 +19,8 @@ const swaggerOptions ={
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
-console.log(swaggerSpec);
 
 const yamlData = yaml.stringify(swaggerSpec);
-console.log(yamlData)
 fs.writeFileSync(path.join('openapi.yaml'), yamlData);
 
 export const swaggerRoute = new Router().get('/swagger.json', (ctx) => {
