@@ -25,16 +25,22 @@ const router = new Router({
  */
 
 // GET /: retrieve all skills
-router.get("/", async (ctx) => {
-  try {
-    const skills = await prisma.skill.findMany();
-    ctx.status = 200;
-    ctx.body = skills;
-  } catch (error) {
-    ctx.status = 500;
-    ctx.body = "Error: " + error;
+router.get(
+  "/",
+  authUser,
+  (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
+  async (ctx) => {
+    try {
+      const skills = await prisma.skill.findMany();
+      ctx.status = 200;
+      ctx.body = skills;
+    } catch (error) {
+      ctx.status = 500;
+      ctx.body = "Error: " + error;
+    }
   }
-});
+);
+
 
 /**
  * @swagger
