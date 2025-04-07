@@ -34,8 +34,6 @@ app.use(
 
 app.use(bodyParser());
 
-console.log(swaggerSpec)
-
 //router.get('/swagger-json', koaSwagger({ swaggerOptions: { spec: swaggerSpec as Record<string, unknown> }}));
 
 router.get('/swagger.json', (ctx) => {
