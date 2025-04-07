@@ -7,10 +7,34 @@ import { validationError } from "../utilities/errorsHandler";
 import { raceExists } from "../middlewares/middlewareRace";
 import { authUser, userRole } from "../middlewares/middlewareAuth";
 
+/**
+ * @swagger
+ * tags:
+ *   name: Races
+ *   description: API for crud operations on races
+ */
 const router = new Router({
   prefix: "/race",
 });
 
+/**
+ * @swagger
+ * /race:
+ *   get:
+ *     summary: Retrieve all races
+ *     tags: [Races]
+ *     responses:
+ *       201:
+ *         description: List of all races
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Race'
+ *       500:
+ *         description: Internal server error
+ */
 // GET /: retrive all race
 router.get(
   "/",
@@ -27,7 +51,37 @@ router.get(
     }
   }
 );
-
+/** 
+ * @swagger
+ * /race:
+ *   post:
+ *     summary: Create a new race
+ *     tags: [Races]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *            type: object
+ *           properties:
+ *            name:
+ *             type: string
+ *            key:
+ *            type: string
+ *           modHealth:
+ *            type: number
+ *          modStamina:
+ *           type: number
+ *         modMana:
+ *          type: number
+ *     responses:
+ *      201:
+ *        description: Race created successfully
+ *      400:
+ *       description: Invalid data
+ *      500:
+ *       description: Internal server error 
+ */
 // POST /: create a race
 router.post(
   "/",
@@ -66,6 +120,31 @@ router.post(
   }
 );
 
+/**
+ * @swagger
+ * /race/{id}:
+ *   get:
+ *     summary: Retrieve a race by ID
+ *     tags: [Races]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the race to retrieve
+ *         schema:
+ *           type: string
+ *     responses:
+ *       201:
+ *         description: Race found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Race'
+ *       404:
+ *         description: Race not found
+ *       500:
+ *         Internal server error
+ */
 // GET /:id: get single race
 router.get(
   "/:id",
@@ -96,6 +175,42 @@ router.get(
   }
 );
 
+/**
+ * @swagger
+ * /race/{id}:
+ *   patch:
+ *     summary: Update a race by ID
+ *     tags: [Races]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the race to update
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               key:
+ *                 type: string
+ *               modHealth:
+ *                 type: number
+ *               modStamina:
+ *                 type: number
+ *               modMana:
+ *                 type: number
+ *     responses:
+ *       201:
+ *         description: Race updated successfully
+ *       500:
+ *         description: Internal server error
+ */
 // PATCH /:id: update single race
 router.patch(
   "/:id",
@@ -129,6 +244,25 @@ router.patch(
   }
 );
 
+/**
+ * @swagger
+ * /race/{id}:
+ *   delete:
+ *     summary: Delete a race by ID
+ *     tags: [Races]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the race to delete
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Race deleted successfully
+ *       500:
+ *         description: Internal server error
+ */
 // DELETE /:id: delete single race
 router.delete(
   "/:id",
