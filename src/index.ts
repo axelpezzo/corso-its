@@ -11,6 +11,8 @@ import bodyParser from "koa-bodyparser";
 import userRouter from "./routes/user";
 import meRouter from "./routes/me";
 import classSkillModRoutes from "./routes/classSkillMod";
+import swaggerJSDoc from "swagger-jsdoc";
+import { koaSwagger } from "koa2-swagger-ui";
 
 dotenv.config();
 
