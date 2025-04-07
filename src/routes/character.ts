@@ -11,6 +11,26 @@ const router = new Router({
   prefix: "/character",
 });
 
+/**
+ * @swagger
+ * /character:
+ *   get:
+ *     summary: Retrieve all characters for the authenticated user
+ *     tags: [Character]
+ *     responses:
+ *       200:
+ *         description: A list of characters.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: "#/components/schemas/Character"
+ *       500:
+ *         description: Internal server error.
+ */
+
+
 // GET /: retrive all characters
 router.get(
   "/",
@@ -31,6 +51,32 @@ router.get(
     }
   }
 );
+
+/**
+ * @swagger
+ * /character:
+ *   post:
+ *     summary: Create a new character
+ *     tags: [Character]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Character"
+ *     responses:
+ *       201:
+ *         description: Character created successfully.
+ *         content:
+ *            text/plain:
+ *              schema:
+ *                type: string
+ *                example: "Character created: 183adef0-ecba-4546-bd1e-e9a2a8b4bd51"
+ *       400:
+ *         description: Validation error.
+ *       500:
+ *         description: Internal server error.
+ */
 
 // POST /: create a character
 router.post(
@@ -74,6 +120,32 @@ router.post(
   }
 );
 
+/**
+ * @swagger
+ * /character/{id}:
+ *   get:
+ *     summary: Get a character by ID
+ *     tags: [Character]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The character ID.
+ *     responses:
+ *       200:
+ *         description: Character found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Character"
+ *       404:
+ *         description: Character not found.
+ *       500:
+ *         description: Internal server error.
+ */
+
 // GET /:id: get single character
 router.get(
   "/:id",
@@ -104,6 +176,39 @@ router.get(
     }
   }
 );
+
+/**
+ * @swagger
+ * /character/{id}:
+ *   patch:
+ *     summary: Update an existing character
+ *     tags: [Character]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The character ID.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Character"
+ *     responses:
+ *       200:
+ *         description: Character updated successfully.
+ *         content:
+ *            text/plain:
+ *              schema:
+ *                type: string
+ *                example: "Character updated: 183adef0-ecba-4546-bd1e-e9a2a8b4bd51"
+ *       404:
+ *         description: Character not found.
+ *       500:
+ *         description: Internal server error.
+ */
 
 // PATCH /:id: update single character
 router.patch(
@@ -140,6 +245,33 @@ router.patch(
   }
 );
 
+/**
+ * @swagger
+ * /character/{id}:
+ *   delete:
+ *     summary: Delete a character by ID
+ *     tags: [Character]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The character ID.
+ *     responses:
+ *       200:
+ *         description: Character deleted successfully.
+ *         content:
+ *            text/plain:
+ *              schema:
+ *                type: string
+ *                example: "Character deleted: 183adef0-ecba-4546-bd1e-e9a2a8b4bd51"
+ *       404:
+ *         description: Character not found.
+ *       500:
+ *         description: Internal server error.
+ */
+
 // DELETE /:id: delete single character
 router.delete(
   "/:id",
@@ -167,3 +299,42 @@ router.delete(
 );
 
 export default router;
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Character:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The character ID.
+ *         name:
+ *           type: string
+ *           description: The name of the character.
+ *         history:
+ *           type: string
+ *           description: The backstory or lore of the character.
+ *         age:
+ *           type: integer
+ *           description: The character's age.
+ *         health:
+ *           type: integer
+ *           description: The base health points of the character.
+ *         stamina:
+ *           type: integer
+ *           description: The base stamina of the character.
+ *         mana:
+ *           type: integer
+ *           description: The base mana of the character.
+ *         idClass:
+ *           type: string
+ *           description: The class ID associated with this character.
+ *         idRace:
+ *           type: string
+ *           description: The race ID associated with this character.
+ *         userId:
+ *           type: string
+ *           description: The user ID who owns this character.
+ */
