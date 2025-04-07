@@ -11,7 +11,6 @@ import bodyParser from "koa-bodyparser";
 import userRouter from "./routes/user";
 import meRouter from "./routes/me";
 import classSkillModRoutes from "./routes/classSkillMod";
-
 // Init "dotenv"
 dotenv.config();
 
