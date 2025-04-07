@@ -11,19 +11,21 @@ import bodyParser from "koa-bodyparser";
 import userRouter from "./routes/user";
 import meRouter from "./routes/me";
 import classSkillModRoutes from "./routes/classSkillMod";
+import { swaggerRoute, swaggerUI } from "./swagger"
 
-// Init "dotenv"
 dotenv.config();
 
 const app = new Koa();
 const router = new Router();
 
 app.use(bodyParser());
+app.use(swaggerUI);
 
 router.get("/", (ctx) => {
   ctx.response.body = "GDR Node";
 });
 
+app.use(swaggerRoute.routes()).use(swaggerRoute.allowedMethods());
 app.use(characterRoutes.routes()).use(characterRoutes.allowedMethods());
 app.use(attributeRoutes.routes()).use(attributeRoutes.allowedMethods());
 app.use(classSkillModRoutes.routes()).use(classSkillModRoutes.allowedMethods());
