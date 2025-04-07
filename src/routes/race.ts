@@ -62,18 +62,9 @@ router.get(
  *       content:
  *         application/json:
  *           schema:
- *            type: object
- *           properties:
- *            name:
- *             type: string
- *            key:
- *            type: string
- *           modHealth:
- *            type: number
- *          modStamina:
- *           type: number
- *         modMana:
- *          type: number
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Race'
  *     responses:
  *      201:
  *        description: Race created successfully
@@ -132,7 +123,9 @@ router.post(
  *         required: true
  *         description: ID of the race to retrieve
  *         schema:
- *           type: string
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Race'
  *     responses:
  *       201:
  *         description: Race found
@@ -187,24 +180,9 @@ router.get(
  *         required: true
  *         description: ID of the race to update
  *         schema:
- *           type: string
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               key:
- *                 type: string
- *               modHealth:
- *                 type: number
- *               modStamina:
- *                 type: number
- *               modMana:
- *                 type: number
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Race'
  *     responses:
  *       201:
  *         description: Race updated successfully
@@ -287,5 +265,23 @@ router.delete(
     }
   }
 );
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *  Race:
+ *         type: object
+ *           properties:
+ *            name:
+ *             type: string
+ *            key:
+ *            type: string
+ *           modHealth:
+ *            type: number
+ *          modStamina:
+ *           type: number
+ *         modMana:
+ *          type: number
+ */
 
 export default router;
