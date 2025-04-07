@@ -23,8 +23,10 @@
     "dotenv": "^16.4.7",
     "koa": "^2.16.0",
     "koa-bodyparser": "^4.4.1",
+    "koa2-swagger-ui": "^5.11.0",
     "pg": "^8.14.1",
     "prisma": "^6.5.0",
+    "swagger-jsdoc": "^6.2.8",
     "zod": "^3.24.2"
   },
   "devDependencies": {
