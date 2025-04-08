@@ -9,7 +9,7 @@ export const authUser = async (ctx: Context, next: Next) => {
 
   if (!sessionId) {
     ctx.status = 401;
-    ctx.body = { error: "Unauthorized" };
+    ctx.body = "Unauthorized";
     return;
   }
 
@@ -24,7 +24,7 @@ export const authUser = async (ctx: Context, next: Next) => {
 
   if (!session || !session.user) {
     ctx.status = 401;
-    ctx.body = { error: "Unauthorized" };
+    ctx.body = "Unauthorized";
     return;
   }
 
@@ -41,7 +41,7 @@ export const userRole = async (
 
   if (!user) {
     ctx.status = 401;
-    ctx.body = { error: "Unauthorized" };
+    ctx.body = "Unauthorized" ;
     return;
   }
 
@@ -50,7 +50,7 @@ export const userRole = async (
   } else {
     if (user.role !== role) {
       ctx.status = 403;
-      ctx.body = { error: "Forbidden" };
+      ctx.body = "Forbidden";
       return;
     }
 
