@@ -10,6 +10,14 @@ import { classExists } from "../middlewares/middlewareClass";
 
 const router = new Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Class Skill Modifications
+ *   description: API for managing class skill tables and their relationships
+ */
+
+
 // GET /: retrive all class/skill mods
 /**
  * @swagger
@@ -372,7 +380,6 @@ router.get(
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-
 router.patch(
   "/class/:idClass/skill/:idSkill",
   authUser,
@@ -381,6 +388,7 @@ router.patch(
   async (ctx) => {
     const idClass = ctx.params.idClass;
     const idSkill = ctx.params.idSkill;
+    ctx.request.body = classSkillModSchema.parse(ctx.request.body);
     const data = ctx.request.body as ClassSkillMod;
 
     try {
@@ -528,20 +536,12 @@ router.delete(
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   idSkill:
- *                     type: string
- *                     format: uuid
- *                   idClass:
- *                     type: string
- *                     format: uuid
- *                   value:
- *                     type: integer
- *                   skill:
- *                     $ref: '#/components/schemas/Skill'
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/ClassSkillWithSkill'
  *       401:
  *         description: Unauthorized - User not authenticated
  *         content:
@@ -568,12 +568,12 @@ router.delete(
  *               $ref: '#/components/schemas/Error'
  */
 router.get(
-  "/class/:idClass/skill",
+  "/class/:id/skill",
   authUser,
   classExists,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
-    const idClass = ctx.params.idClass;
+    const idClass = ctx.params.id;
 
     try {
       const clazz = await prisma.classSkillMod.findMany({
@@ -629,4 +629,18 @@ export default router;
  *          type: integer
  *      required:
  *        - value
+ * 
+ *    ClassSkillWithSkill:
+ *      type: object
+ *      properties:
+ *        idSkill:
+ *          type: string
+ *          format: uuid
+ *        idClass:
+ *          type: string
+ *          format: uuid
+ *        value:
+ *          type: integer
+ *        skill:
+ *          $ref: '#/components/schemas/Skill'
  */
