@@ -11,6 +11,19 @@ const router = new Router({
   prefix: "/skill",
 });
 
+/**
+ * @swagger
+ * /skill:
+ *   get:
+ *     summary: Retrieve all skills
+ *     tags: [Skill]
+ *     responses:
+ *       200:
+ *         description: A list of skills.
+ *       500:
+ *         description: Internal server error.
+ */
+
 // GET /: retrieve all skills
 router.get(
   "/",
@@ -27,6 +40,35 @@ router.get(
     }
   }
 );
+
+
+/**
+ * @swagger
+ * /skill:
+ *   post:
+ *     summary: Create a new skill
+ *     tags: [Skill]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               key:
+ *                 type: string
+ *               value:
+ *                 type: integer
+ *               idAttribute:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Skill created.
+ *       500:
+ *         description: Internal server error.
+ */
 
 // POST /: create a skill
 router.post(
@@ -48,22 +90,42 @@ router.post(
           },
         });
 
-        ctx.status = 201;
-        ctx.body = "Skill created: " + skill.id;
-      } catch (error) {
-        ctx.status = 500;
-        ctx.body = "Error: " + error;
-      }
+      ctx.status = 201;
+      ctx.body = "Skill created: " + skill.id;
     } catch (error) {
       ctx.status = 500;
-      if (error instanceof ZodError) {
-        ctx.body = validationError(error);
-      } else {
-        ctx.body = "Generic Error: " + error;
-      }
+      ctx.body = "Error: " + error;
+    }
+  } catch (error) {
+    ctx.status = 500;
+    if (error instanceof ZodError) {
+      ctx.body = validationError(error);
+    } else {
+      ctx.body = "Generic Error: " + error;
     }
   }
-);
+});
+
+/**
+ * @swagger
+ * /skill/{id}:
+ *   get:
+ *     summary: Get a single skill
+ *     tags: [Skill]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Skill found.
+ *       404:
+ *         description: Skill not found.
+ *       500:
+ *         description: Internal server error.
+ */
 
 // GET /:id: get single skill
 router.get(
@@ -80,20 +142,53 @@ router.get(
         },
       });
 
-      if (!skill) {
-        ctx.status = 404;
-        ctx.body = "Skill not found";
-        return;
-      } else {
-        ctx.status = 200;
-        ctx.body = skill;
-      }
-    } catch (error) {
-      ctx.status = 500;
-      ctx.body = "Error: " + error;
+    if (!skill) {
+      ctx.status = 404;
+      ctx.body = "Skill not found";
+      return;
+    } else {
+      ctx.status = 200;
+      ctx.body = skill;
     }
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = "Error: " + error;
   }
-);
+});
+
+/**
+ * @swagger
+ * /skill/{id}:
+ *   patch:
+ *     summary: Update a skill
+ *     tags: [Skill]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               key:
+ *                 type: string
+ *               value:
+ *                 type: integer
+ *               idAttribute:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Skill updated.
+ *       500:
+ *         description: Internal server error.
+ */
 
 // PATCH /:id: update single skill
 router.patch(
@@ -118,14 +213,32 @@ router.patch(
         },
       });
 
-      ctx.status = 200;
-      ctx.body = "Skill updated: " + skill.id;
-    } catch (error) {
-      ctx.status = 500;
-      ctx.body = "Error: " + error;
-    }
+    ctx.status = 200;
+    ctx.body = "Skill updated: " + skill.id;
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = "Error: " + error;
   }
-);
+});
+
+/**
+ * @swagger
+ * /skill/{id}:
+ *   delete:
+ *     summary: Delete a skill
+ *     tags: [Skill]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Skill deleted.
+ *       500:
+ *         description: Internal server error.
+ */
 
 // DELETE /:id: delete single skill
 router.delete(
