@@ -31,7 +31,6 @@ const router = new Router({
  *         description: Internal server error.
  */
 
-
 // GET /: retrieve all skills
 router.get(
   "/",
@@ -73,7 +72,6 @@ router.get(
  *         description: Internal server error.
  */
 
-
 // POST /: create a skill
 router.post(
   "/",
@@ -98,12 +96,8 @@ router.post(
         },
       });
 
-        ctx.status = 201;
-        ctx.body = "Skill created: " + skill.id;
-      } catch (error) {
-        ctx.status = 500;
-        ctx.body = "Error: " + error;
-      }
+      ctx.status = 201;
+      ctx.body = "Skill created: " + skill.id;
     } catch (error) {
       ctx.status = 500;
       if (error instanceof ZodError) {
@@ -111,14 +105,6 @@ router.post(
       } else {
         ctx.body = "Generic Error: " + error;
       }
-    }
-  }
-);
-      ctx.status = 201;
-      ctx.body = "Skill created: " + skill.id;
-    } catch (error) {
-      ctx.status = 500;
-      ctx.body = "Error: " + error;
     }
   }
 );
@@ -148,7 +134,6 @@ router.post(
  *         description: Internal server error.
  */
 
-
 // GET /:id: get single skill
 router.get(
   "/:id",
@@ -165,20 +150,6 @@ router.get(
         },
       });
 
-      if (!skill) {
-        ctx.status = 404;
-        ctx.body = "Skill not found";
-        return;
-      } else {
-        ctx.status = 200;
-        ctx.body = skill;
-      }
-    } catch (error) {
-      ctx.status = 500;
-      ctx.body = "Error: " + error;
-    }
-  }
-);
       if (!skill) {
         ctx.status = 404;
         ctx.body = "Skill not found";
@@ -258,14 +229,6 @@ router.patch(
     }
   }
 );
-      ctx.status = 200;
-      ctx.body = "Skill updated: " + skill.id;
-    } catch (error) {
-      ctx.status = 500;
-      ctx.body = "Error: " + error;
-    }
-  }
-);
 
 /**
  * @swagger
@@ -289,7 +252,6 @@ router.patch(
  *       500:
  *         description: Internal server error.
  */
-
 
 // DELETE /:id: delete single skill
 router.delete(
@@ -344,7 +306,6 @@ router.delete(
  *         description: Internal server error.
  */
 
-
 router.get(
   "/attribute/:id",
   authUser,
@@ -380,7 +341,6 @@ router.get(
 );
 
 export default router;
-
 
 /**
  * @swagger
