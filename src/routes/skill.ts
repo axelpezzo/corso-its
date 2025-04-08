@@ -6,6 +6,7 @@ import { skillSchema } from "../../prisma/validation/validationSkill";
 import { validationError } from "../utilities/errorsHandler";
 import { ZodError } from "zod";
 import { authUser, userRole } from "../middlewares/middlewareAuth";
+import { authJWT } from "../middlewares/middlewareJWT";
 
 const router = new Router({
   prefix: "/skill",
@@ -34,6 +35,7 @@ const router = new Router({
 // GET /: retrieve all skills
 router.get(
   "/",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -47,7 +49,6 @@ router.get(
     }
   }
 );
-
 
 /**
  * @swagger
@@ -76,6 +77,7 @@ router.get(
 // POST /: create a skill
 router.post(
   "/",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -96,6 +98,22 @@ router.post(
         },
       });
 
+        ctx.status = 201;
+        ctx.body = "Skill created: " + skill.id;
+      } catch (error) {
+        ctx.status = 500;
+        ctx.body = "Error: " + error;
+      }
+    } catch (error) {
+      ctx.status = 500;
+      if (error instanceof ZodError) {
+        ctx.body = validationError(error);
+      } else {
+        ctx.body = "Generic Error: " + error;
+      }
+    }
+  }
+);
       ctx.status = 201;
       ctx.body = "Skill created: " + skill.id;
     } catch (error) {
@@ -134,6 +152,7 @@ router.post(
 // GET /:id: get single skill
 router.get(
   "/:id",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -146,6 +165,20 @@ router.get(
         },
       });
 
+      if (!skill) {
+        ctx.status = 404;
+        ctx.body = "Skill not found";
+        return;
+      } else {
+        ctx.status = 200;
+        ctx.body = skill;
+      }
+    } catch (error) {
+      ctx.status = 500;
+      ctx.body = "Error: " + error;
+    }
+  }
+);
       if (!skill) {
         ctx.status = 404;
         ctx.body = "Skill not found";
@@ -193,6 +226,7 @@ router.get(
 // PATCH /:id: update single skill
 router.patch(
   "/:id",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   skillExists,
@@ -216,6 +250,14 @@ router.patch(
         },
       });
 
+      ctx.status = 200;
+      ctx.body = "Skill updated: " + skill.id;
+    } catch (error) {
+      ctx.status = 500;
+      ctx.body = "Error: " + error;
+    }
+  }
+);
       ctx.status = 200;
       ctx.body = "Skill updated: " + skill.id;
     } catch (error) {
@@ -252,6 +294,7 @@ router.patch(
 // DELETE /:id: delete single skill
 router.delete(
   "/:id",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   skillExists,

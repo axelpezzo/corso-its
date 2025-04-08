@@ -6,6 +6,7 @@ import { validationError } from "../utilities/errorsHandler";
 import { attributeExists } from "../middlewares/middlewareAttribute";
 import { ZodError } from "zod";
 import { authUser, userRole } from "../middlewares/middlewareAuth";
+import { authJWT } from "../middlewares/middlewareJWT";
 
 /**
  * @swagger
@@ -31,9 +32,9 @@ const router = new Router({
  *         description: Errore del server
  */
 
-
 router.get(
   "/",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -79,6 +80,7 @@ router.get(
 // POST /: create a attribute
 router.post(
   "/",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -136,6 +138,7 @@ router.post(
 // GET /:id: get single attribute
 router.get(
   "/:id",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -201,6 +204,7 @@ router.get(
 // PATCH /:id: update single attribute
 router.patch(
   "/:id",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   attributeExists,
@@ -254,6 +258,7 @@ router.patch(
 // DELETE /:id: delete single character
 router.delete(
   "/:id",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   attributeExists,
@@ -275,7 +280,6 @@ router.delete(
     }
   }
 );
-
 
 /**
  * @swagger
@@ -310,6 +314,7 @@ router.delete(
 // GET /attribute/:id/skill
 router.get(
   "/:id/skill",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
