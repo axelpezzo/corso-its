@@ -41,7 +41,7 @@ export const userRole = async (
 
   if (!user) {
     ctx.status = 401;
-    ctx.body = { error: "Unauthorized" } ;
+    ctx.body = { error: "Unauthorized" };
     return;
   }
 
