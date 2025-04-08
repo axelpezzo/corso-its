@@ -7,9 +7,9 @@ import { raceAttrModExsist } from "../middlewares/middlewareRaceAttrMod";
 import { ZodError } from "zod";
 import { authUser, userRole } from "../middlewares/middlewareAuth";
 import { raceExists } from "../middlewares/middlewareRace";
+import { authJWT } from "../middlewares/middlewareJWT";
 
 const router = new Router();
-
 
 // GET /: retrive all races attribute mode
 /**
@@ -34,6 +34,7 @@ const router = new Router();
  */
 router.get(
   "/race/attr/mod",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -47,7 +48,6 @@ router.get(
     }
   }
 );
-
 
 // GET /: retrive a single attribute mode
 /**
@@ -90,6 +90,7 @@ router.get(
  */
 router.get(
   "/race/:idRace/attr/:idAttribute",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -132,7 +133,6 @@ router.get(
     }
   }
 );
-
 
 // POST /: create a raceAttrMod
 /**
@@ -177,6 +177,7 @@ router.get(
  */
 router.post(
   "/race/:idRace/attr/:idAttribute",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -224,7 +225,6 @@ router.post(
   }
 );
 
-
 // PATCH /: update a raceAttrMod
 /**
  *  @swagger
@@ -268,6 +268,7 @@ router.post(
  */
 router.patch(
   "/race/:idRace/attr/:idAttribute",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   raceAttrModExsist,
@@ -320,7 +321,6 @@ router.patch(
   }
 );
 
-
 // DELETE /: delete a raceAttrMod
 /**
  *  @swagger
@@ -354,6 +354,7 @@ router.patch(
  */
 router.delete(
   "/race/:idRace/attr/:idAttribute",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   raceAttrModExsist,
@@ -402,6 +403,7 @@ router.delete(
 // GET /race/:idRace/attr get a race with relative attributes
 router.get(
   "/race/:idRace/attr",
+  authJWT,
   authUser,
   raceExists,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
@@ -471,6 +473,6 @@ router.get(
  *                  message:
  *                    type: string
  *                    example: "Unauthorized access"
- */ 
+ */
 
 export default router;

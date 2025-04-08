@@ -6,6 +6,7 @@ import { validationError } from "../utilities/errorsHandler";
 import { classSchema } from "../../prisma/validation/validationClass";
 import { classExists } from "../middlewares/middlewareClass";
 import { authUser, userRole } from "../middlewares/middlewareAuth";
+import { authJWT } from "../middlewares/middlewareJWT";
 
 /**
  * @swagger
@@ -40,6 +41,7 @@ const router = new Router({
 // GET /: retrieve all classes
 router.get(
   "/",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -78,6 +80,7 @@ router.get(
 // POST /: create a class
 router.post(
   "/",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -140,6 +143,7 @@ router.post(
 // GET /:id: get single class
 router.get(
   "/:id",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -200,6 +204,7 @@ router.get(
 // PATCH /:id: update single class
 router.patch(
   "/:id",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   classExists,
@@ -253,6 +258,7 @@ router.patch(
 // DELETE /:id: delete single class
 router.delete(
   "/:id",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   classExists,
