@@ -14,7 +14,7 @@ const router = new Router({
 /**
  *  @swagger
  *  tags:
- *    name: user
+ *    name: User
  *    description: User and session management 
  */
 
@@ -27,7 +27,7 @@ const router = new Router({
  *      summary: Register a new user
  *      description: Creates a new user account with email and password
  *      tags:
- *        - user
+ *        - User
  *      requestBody:
  *        required: true
  *        content:
@@ -83,7 +83,7 @@ router.post("/register", async (ctx) => {
  *      summary: User login
  *      description: Authenticates a user and returns a session cookie
  *      tags:
- *        - user
+ *        - User
  *      requestBody:
  *        required: true
  *        content:
@@ -165,7 +165,7 @@ router.post("/login", async (ctx) => {
  *      summary: User logout
  *      description: Logs out a user by invalidating their session
  *      tags:
- *        - user
+ *        - User
  *      security:
  *        - cookieAuth: []
  *      responses:
@@ -226,7 +226,7 @@ router.post("/logout", authUser, async (ctx) => {
  *      summary: Update user
  *      description: Updates a user's email and/or password
  *      tags:
- *        - user
+ *        - User
  *      security:
  *        - cookieAuth: []
  *      parameters:
@@ -287,7 +287,7 @@ router.patch("/:id", authUser, async (ctx) => {
  *      summary: Delete user
  *      description: Deletes a user account permanently from the system
  *      tags:
- *        - user
+ *        - User
  *      security:
  *        - cookieAuth: []
  *      parameters:
