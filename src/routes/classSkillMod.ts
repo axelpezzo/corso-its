@@ -7,6 +7,7 @@ import { validationError } from "../utilities/errorsHandler";
 import { classSkillModExists } from "../middlewares/middlewareClassSkillMod";
 import { authUser, userRole } from "../middlewares/middlewareAuth";
 import { classExists } from "../middlewares/middlewareClass";
+import { authJWT } from "../middlewares/middlewareJWT";
 
 const router = new Router();
 
@@ -55,6 +56,7 @@ const router = new Router();
  */
 router.get(
   "/class/skill/mod",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -145,6 +147,7 @@ router.get(
  */
 router.post(
   "/class/:idClass/skill/:idSkill",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -255,6 +258,7 @@ router.post(
  */
 router.get(
   "/class/:idClass/skill/:idSkill",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   async (ctx) => {
@@ -375,6 +379,7 @@ router.get(
 
 router.patch(
   "/class/:idClass/skill/:idSkill",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   classSkillModExists,
@@ -475,6 +480,7 @@ router.patch(
  */
 router.delete(
   "/class/:idClass/skill/:idSkill",
+  authJWT,
   authUser,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
   classSkillModExists,
@@ -569,6 +575,7 @@ router.delete(
  */
 router.get(
   "/class/:idClass/skill",
+  authJWT,
   authUser,
   classExists,
   (ctx, next) => userRole(ctx, next, USER_ROLE.ADMIN),
@@ -606,10 +613,10 @@ export default router;
  * @swagger
  *  components:
  *  schemas:
- *  
+ *
  *    Error:
  *      type: string
- * 
+ *
  *    ClassSkillMod:
  *      type: object
  *      properties:
@@ -621,7 +628,7 @@ export default router;
  *          format: uuid
  *        value:
  *          type: integer
- * 
+ *
  *    ClassSkillModInput:
  *      type: object
  *      properties:
