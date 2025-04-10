@@ -1,0 +1,102 @@
+"use client";
+import {
+  Alert,
+  Anchor,
+  Button,
+  Checkbox,
+  Group,
+  Paper,
+  PasswordInput,
+  TextInput,
+  useMantineTheme,
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { initialValues_Register } from "./const";
+import { RegisterFormValues } from "./types";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { errorsHandlers } from "@/app/lib/errorsHandlers";
+
+const RegisterForm = () => {
+  const [error, setError] = useState<number | null>(null);
+
+  const theme = useMantineTheme();
+  const router = useRouter();
+
+  const form = useForm({
+    initialValues: initialValues_Register,
+  });
+
+  const handleRegister = async (values: RegisterFormValues) => {
+    const data = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: values.email,
+        password: values.password,
+      }),
+    });
+
+    if (data.status === 200) {
+      const { redirect } = await data.json();
+      router.push(redirect);
+    } else {
+      setError(data.status);
+    }
+  };
+
+  return (
+    <Paper shadow="md" p={30} mt={30} radius="md" bg={"violet.8"}>
+      <form onSubmit={form.onSubmit((values) => handleRegister(values))}>
+        <TextInput
+          label="Email"
+          placeholder="you@mantine.dev"
+          {...form.getInputProps("email")}
+          styles={{
+            label: {
+              color: theme.colors.gray[4],
+            },
+          }}
+        />
+        <PasswordInput
+          label="Password"
+          placeholder="Your password"
+          required
+          mt="md"
+          {...form.getInputProps("password")}
+          styles={{
+            label: {
+              color: theme.colors.gray[4],
+            },
+          }}
+        />
+        <Group justify="space-between" mt="lg">
+          <Checkbox
+            label="Remember me"
+            {...form.getInputProps("remember")}
+            styles={{
+              label: {
+                color: theme.colors.gray[4],
+              },
+            }}
+          />
+          <Anchor component="button" size="sm">
+            Forgot password?
+          </Anchor>
+        </Group>
+        <Button fullWidth mt="xl" type="submit">
+          Sign in
+        </Button>
+        {error && (
+          <Alert mt={20} variant="light" color="red">
+            {errorsHandlers(error)}
+          </Alert>
+        )}
+      </form>
+    </Paper>
+  );
+};
+
+export default RegisterForm;
