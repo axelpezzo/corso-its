@@ -17,9 +17,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <MantineProvider theme={customTheme}>
-          <Container>
-            <Box>{children}</Box>
+        <MantineProvider theme={customTheme} defaultColorScheme="dark">
+          <Container
+            bg={"dark.8"}
+            size="full"
+            px={0}
+            py={0}
+            style={{ minHeight: "100vh" }}
+          >
+            {children}
           </Container>
         </MantineProvider>
       </body>
