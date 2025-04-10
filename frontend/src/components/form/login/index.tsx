@@ -48,7 +48,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Paper withBorder shadow="md" p={30} mt={30} radius="md" bg={"dark.7"}>
+    <Paper shadow="md" p={30} mt={30} radius="md" bg={"violet.8"}>
       <form onSubmit={form.onSubmit((values) => handleLogin(values))}>
         <TextInput
           label="Email"

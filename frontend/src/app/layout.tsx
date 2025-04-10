@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Box, Container, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
-import "./globals.css";
+import "../assets/styles/globals.css";
 import customTheme from "@/theme";
 
 export const metadata: Metadata = {
@@ -17,9 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <MantineProvider theme={customTheme} defaultColorScheme="dark">
+        <MantineProvider theme={customTheme}>
           <Container
-            bg={"dark.8"}
+            bg={"violet.9"}
             size="full"
             px={0}
             py={0}
