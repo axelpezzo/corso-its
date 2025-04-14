@@ -11,7 +11,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { initialValues_Login } from "./const";
+import { initialValuesLogin } from "./const";
 import { LoginFormValues } from "./types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -24,7 +24,7 @@ const LoginForm = () => {
   const router = useRouter();
 
   const form = useForm({
-    initialValues: initialValues_Login,
+    initialValues: initialValuesLogin,
   });
 
   const handleLogin = async (values: LoginFormValues) => {

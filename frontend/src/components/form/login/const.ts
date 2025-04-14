@@ -1,6 +1,6 @@
 import { LoginFormValues } from "./types";
 
-export const initialValues_Login: LoginFormValues = {
+export const initialValuesLogin: LoginFormValues = {
   email: "",
   password: "",
   remember: false,
