@@ -16,6 +16,18 @@ const customTheme = createTheme({
     ],
   },
   primaryColor: "violet",
+  components: {
+    Text: {
+      defaultProps: {
+        c: "gray.0",
+      },
+    },
+    Title: {
+      defaultProps: {
+        c: "gray.0",
+      },
+    },
+  },
 });
 
 export default customTheme;

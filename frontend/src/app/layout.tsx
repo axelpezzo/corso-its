@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Box, Container, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "../assets/styles/globals.css";
+import "@mantine/carousel/styles.css";
 import customTheme from "@/theme";
 
 export const metadata: Metadata = {
