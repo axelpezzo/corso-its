@@ -1,8 +1,11 @@
-import RegisterFrom from "@/components/form/register";
+"use client";
+import RegistrationForm from "@/components/form/register";
 import { Anchor, Container, Text, Title } from "@mantine/core";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
   return (
     <Container
       h={"100vh"}
@@ -14,15 +17,15 @@ const Page = () => {
       }}
     >
       <Title ta="center" c="gray.0">
-        Create your account
+        Create an account!
       </Title>
       <Text c="gray.4" size="sm" ta="center" mt={5}>
-        Already have an account?{" "}
+        you already have an account?{" "}
         <Link href="/login">
-            Login account
+          Log in
         </Link>
       </Text>
-      <RegisterFrom/>
+      <RegistrationForm />
     </Container>
   );
 };

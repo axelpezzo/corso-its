@@ -15,7 +15,7 @@ import { initialValues_Login } from "./const";
 import { LoginFormValues } from "./types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { errorsHandlers } from "@/app/lib/errorsHandlers";
+import { errorsHandlers } from "@/lib/errorsHandlers";
 
 const LoginForm = () => {
   const [error, setError] = useState<number | null>(null);
