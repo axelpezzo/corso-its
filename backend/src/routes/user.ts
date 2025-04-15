@@ -13,7 +13,7 @@ const router = new Router({
 });
 
 // POST: /user/register: create a new user
-router.post("/register", authJWT, async (ctx) => {
+router.post("/register", async (ctx) => {
   ctx.request.body = userSchema.parse(ctx.request.body);
   const { email, password } = ctx.request.body as User;
 
@@ -30,7 +30,7 @@ router.post("/register", authJWT, async (ctx) => {
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
-        ctx.status = 500;
+        ctx.status = 409;
         ctx.body = { error: "User mail duplicated" };
       }
     } else {
