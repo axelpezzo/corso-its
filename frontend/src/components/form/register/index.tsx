@@ -39,6 +39,8 @@ const RegistraterForm = () => {
 
     const handleRegister = async (values: RegisterFormValues) => {
 
+        console.log("Registrazione: ", values);
+
         const data = await fetch("/api/auth/register ", {
             method: "POST",
             headers: {

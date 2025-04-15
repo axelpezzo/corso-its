@@ -3,7 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json();
 
-  const res = await fetch(`${process.env.API_BACKEND_URL}/user/register`, {
+  //console.log("Risposta dal frontend: "+await req.json());
+
+  console.log("mail: " + email, "pass: " + password);
+
+  const res = await fetch(`${process.env.API_BACKEND_URL}/user/register`, {    
     method: "POST",
     headers: {
       "Content-Type": "application/json",

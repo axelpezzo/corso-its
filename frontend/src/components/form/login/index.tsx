@@ -53,6 +53,7 @@ const LoginForm = () => {
         <TextInput
           label="Email"
           placeholder="you@mantine.dev"
+          required
           {...form.getInputProps("email")}
           styles={{
             label: {

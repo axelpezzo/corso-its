@@ -7,11 +7,12 @@
   "scripts": {
     "prisma:generate": "npx prisma generate",
     "prisma:migrate:dev": "npx prisma migrate dev --name latest",
+    "prisma:dev": "npx prisma db seed",
     "db": "npx prisma studio",
     "dev:docker": "docker-compose -f docker-compose.yml up",
     "dev:docker:build": "docker-compose -f docker-compose.yml up --build",
     "dev:docker:down": "docker-compose -f docker-compose.yml down -v",
-    "dev": "npm run prisma:migrate:dev && npm run prisma:generate && npx tsx watch src/index.ts",
+    "dev": "npm run prisma:migrate:dev && npm run prisma:generate && npx prisma db seed && npx tsx watch src/index.ts",
     "lint": "eslint ./src",
     "test": "docker-compose -f docker-compose.yml up --build && npx prisma migrate dev --name latest",
     "swagger:generate": "npx tsx src/swagger.ts"
@@ -28,8 +29,10 @@
     "jsonwebtoken": "^9.0.2",
     "koa": "^2.16.0",
     "koa-bodyparser": "^4.4.1",
+    "koa2-swagger-ui": "^5.11.0",
     "pg": "^8.14.1",
     "prisma": "^6.5.0",
+    "swagger-jsdoc": "^6.2.8",
     "zod": "^3.24.2"
   },
   "devDependencies": {

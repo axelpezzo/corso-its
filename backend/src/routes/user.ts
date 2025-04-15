@@ -13,7 +13,9 @@ const router = new Router({
 });
 
 // POST: /user/register: create a new user
-router.post("/register", authJWT, async (ctx) => {
+router.post("/register", async (ctx) => {
+  console.log("Registrazione: ", ctx.request.body);
+
   ctx.request.body = userSchema.parse(ctx.request.body);
   const { email, password } = ctx.request.body as User;
 
@@ -88,7 +90,7 @@ router.post("/login", async (ctx) => {
 });
 
 // POST: /user/logout: logout a user
-router.post("/logout", authJWT, authUser, async (ctx) => {
+router.post("/logout", authUser, async (ctx) => {
   const sessionId = ctx.cookies.get(COOKIE_SESSION_NAME);
 
   if (!sessionId) {

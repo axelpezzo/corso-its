@@ -565,19 +565,21 @@ paths:
                 $ref: "#/components/schemas/Error"
   /race/attr/mod:
     get:
-      summary: Get all Race Attribute Modifiers
-      description: Retrieves a list of all Race Attribute Modifiers from the database.
+      summary: Retrieve all Race Attribute Modifiers
+      description: Get a list of all race attribute modifiers stored in the system.
       tags:
-        - raceAttrMod
+        - Race Attribude Mode
       responses:
         "200":
-          description: A list of Race Attribute Modifiers
+          description: Successfully retrieved all race attribute modifiers
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/RaceAttrMod"
+                  $ref: "#/components/schemas/RaceAttribute"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
         "500":
           description: Internal server error
   "/race/{idRace}/attr/{idAttribute}":
@@ -586,7 +588,7 @@ paths:
       description: Retrieves a single Race Attribute Modifier based on Race and
         Attribute IDs.
       tags:
-        - raceAttrMod
+        - Race Attribude Mode
       parameters:
         - in: path
           name: idRace
@@ -620,7 +622,7 @@ paths:
       summary: Create a new Race Attribute Modifier
       description: Creates a new modifier linking a race to an attribute with a given value.
       tags:
-        - raceAttrMod
+        - Race Attribude Mode
       parameters:
         - in: path
           name: idRace
@@ -656,7 +658,7 @@ paths:
       summary: Update a Race Attribute Modifier
       description: Updates the value of an existing Race Attribute Modifier.
       tags:
-        - raceAttrMod
+        - Race Attribude Mode
       parameters:
         - in: path
           name: idRace
@@ -693,7 +695,7 @@ paths:
       description: Deletes an existing Race Attribute Modifier based on Race and
         Attribute IDs.
       tags:
-        - raceAttrMod
+        - Race Attribude Mode
       parameters:
         - in: path
           name: idRace
@@ -713,6 +715,36 @@ paths:
         "401":
           description: Unauthorized operation
           $ref: "#/components/responses/UnauthorizedError"
+        "500":
+          description: Internal server error
+  "/race/{idRace}/attr":
+    get:
+      summary: Get a Race with its relative attributes
+      description: Retrieve the attributes associated with a specific Race by its ID.
+      tags:
+        - Race Attribude Mode
+      parameters:
+        - in: path
+          name: idRace
+          required: true
+          description: ID of the Race to retrieve attributes for
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully retrieved race attributes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RaceAttribute"
+        "400":
+          description: Bad request, missing or invalid parameters
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          description: Race not found
         "500":
           description: Internal server error
   /skill:
@@ -909,7 +941,7 @@ components:
           type: integer
       required:
         - value
-    RaceAttrMod:
+    RaceAttributeMode:
       type: object
       properties:
         idRace:
@@ -948,3 +980,5 @@ tags:
     description: API per la gestione degli attributi
   - name: Classes
     description: API per la gestione delle classi
+  - name: Me (User Profile)
+    description: User profile information
