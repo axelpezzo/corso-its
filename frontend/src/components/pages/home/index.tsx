@@ -1,22 +1,23 @@
 "use client";
 import loop from "@/assets/loop.mp4";
-import Video from "@/components/ui/video";
-import { Paper, Title } from "@mantine/core";
+import Navbar from "@/components/ui/navbar";
 
 const HomePage = () => {
   return (
-    <>
-      <Paper
-        radius={0}
-        p={30}
-        bg="violet.6"
-        style={{ height: "100vh", width: "400px" }}
+    <div className="relative w-full h-screen overflow-hidden">
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        autoPlay
+        loop
+        muted
+        playsInline
       >
-        <Title order={2} ta="center" mt="md" mb={50}>
-          Welcome back to Mantine!
-        </Title>
-      </Paper>
-    </>
+        <source src={loop} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      <Navbar />
+    </div>
   );
 };
 

@@ -1,7 +1,11 @@
-import RegistationForm from "@/components/form/register";
-import { Container, Title, Group, Anchor, Text } from "@mantine/core";
+"use client";
+import RegistrationForm from "@/components/form/register";
+import { Anchor, Container, Text, Title } from "@mantine/core";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
   return (
     <Container
       h={"100vh"}
@@ -13,14 +17,15 @@ const Page = () => {
       }}
     >
       <Title ta="center" c="gray.0">
-        Register your account!
+        Create an account!
       </Title>
-      <Group justify="center" mt="lg">
-        <Text size="sm">
-          If you already have an account <Anchor size="sm" href="/login">click here</Anchor>
-        </Text>
-      </Group>
-      <RegistationForm/>
+      <Text c="gray.4" size="sm" ta="center" mt={5}>
+        you already have an account?{" "}
+        <Link href="/login">
+          Log in
+        </Link>
+      </Text>
+      <RegistrationForm />
     </Container>
   );
 };
