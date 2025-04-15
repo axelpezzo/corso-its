@@ -5,5 +5,7 @@ export const errorsHandlers = (error: number) => {
     default:
     case 500:
       return "Internal Server Error";
+    case 409:
+      return "User mail duplicated";
   }
 };
