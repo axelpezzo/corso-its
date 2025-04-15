@@ -1,6 +1,7 @@
 "use client";
 import RegistrationForm from "@/components/form/register";
 import { Anchor, Container, Text, Title } from "@mantine/core";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
@@ -20,9 +21,9 @@ const Page = () => {
       </Title>
       <Text c="gray.4" size="sm" ta="center" mt={5}>
         you already have an account?{" "}
-        <Anchor size="sm" component="button" onClick={() => router.push("/login")}>
+        <Link href="/login">
           Log in
-        </Anchor>
+        </Link>
       </Text>
       <RegistrationForm />
     </Container>

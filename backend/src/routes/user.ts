@@ -30,7 +30,7 @@ router.post("/register", async (ctx) => {
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
-        ctx.status = 500;
+        ctx.status = 409;
         ctx.body = { error: "User mail duplicated" };
       }
     } else {
