@@ -72,6 +72,18 @@ const RegisterForm = () => {
             },
           }}
         />
+        <PasswordInput
+          label="Password confermation"
+          placeholder="Your password confermation"
+          required
+          mt="md"
+          {...form.getInputProps("password")}
+          styles={{
+            label: {
+              color: theme.colors.gray[4],
+            },
+          }}
+        />
         <Group justify="space-between" mt="lg">
           <Checkbox
             label="Remember me"
@@ -83,11 +95,11 @@ const RegisterForm = () => {
             }}
           />
           <Anchor component="button" size="sm">
-            Forgot password?
+            Forgot account?
           </Anchor>
         </Group>
         <Button fullWidth mt="xl" type="submit">
-          Sign in
+          Create account
         </Button>
         {error && (
           <Alert mt={20} variant="light" color="red">

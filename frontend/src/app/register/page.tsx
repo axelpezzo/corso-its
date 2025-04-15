@@ -1,5 +1,6 @@
 import RegisterFrom from "@/components/form/register";
 import { Anchor, Container, Text, Title } from "@mantine/core";
+import Link from "next/link";
 
 const Page = () => {
   return (
@@ -13,13 +14,15 @@ const Page = () => {
       }}
     >
       <Title ta="center" c="gray.0">
-        Welcome back!
+        Create your account
       </Title>
       <Text c="gray.4" size="sm" ta="center" mt={5}>
-        Do not have an account yet?{" "}
-        <Anchor size="sm" component="button">
-          Login account
-        </Anchor>
+        Already have an account?{" "}
+        <Link href="/login">
+          <Anchor size="sm" component="button">
+            Login account
+          </Anchor>
+        </Link>
       </Text>
       <RegisterFrom/>
     </Container>

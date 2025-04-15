@@ -2,15 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
 const protectedRoutes = ["/"];
-const publicRoutes = ["/login"];
-const publicRoutesWithAuth = ["/register"];
+const publicRoutes = ["/login", "/register"];
 
 export default async function middleware(req: NextRequest) {
   // 1. Check if the current route is protected or public
   const path = req.nextUrl.pathname;
   const isProtectedRoute = protectedRoutes.includes(path);
   const isPublicRoute = publicRoutes.includes(path);
-
+  
   // 2. Get the session from the cookie
   const cookieStore = await cookies();
   const session = cookieStore.get("sessionId")?.value;
