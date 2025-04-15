@@ -27,7 +27,7 @@ const RegisterForm = () => {
     initialValues: initialValues_Register,
     validate: {
       password : (value, values) =>
-        value !== values.password
+        value !== values.confirmPassword
           ? "Passwords did not match"
           : null,
     },
@@ -79,7 +79,7 @@ const RegisterForm = () => {
           }}
         />
         <PasswordInput
-          label="Password confermation"
+          label="confermationPassword"
           placeholder="Your password confermation"
           required
           mt="md"
