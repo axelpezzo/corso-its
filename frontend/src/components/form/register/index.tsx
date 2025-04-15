@@ -25,6 +25,12 @@ const RegisterForm = () => {
 
   const form = useForm({
     initialValues: initialValues_Register,
+    validate: {
+      password : (value, values) =>
+        value !== values.password
+          ? "Passwords did not match"
+          : null,
+    },
   });
 
   const handleRegister = async (values: RegisterFormValues) => {
@@ -77,7 +83,7 @@ const RegisterForm = () => {
           placeholder="Your password confermation"
           required
           mt="md"
-          {...form.getInputProps("password")}
+          {...form.getInputProps("password confirmation")}
           styles={{
             label: {
               color: theme.colors.gray[4],

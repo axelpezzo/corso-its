@@ -19,9 +19,7 @@ const Page = () => {
       <Text c="gray.4" size="sm" ta="center" mt={5}>
         Already have an account?{" "}
         <Link href="/login">
-          <Anchor size="sm" component="button">
             Login account
-          </Anchor>
         </Link>
       </Text>
       <RegisterFrom/>
