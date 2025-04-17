@@ -8,10 +8,10 @@ import { use, useEffect, useState } from "react";
 interface IOwnProps {
   characters: Record<string, string | number>[];
   attributes?: Record<string, string | number>[];
-  skilss?: Record<string, string | number>[];
+  skills?: Record<string, string | number>[];
 }
 
-const CharatersPage = ({ characters, attributes, skilss }: IOwnProps) => {
+const CharatersPage = ({ characters, attributes, skills }: IOwnProps) => {
   const { id } = useCharacterStore();
   const [render, setRender] = useState(false);
   const character = characters.find((item) => item.id === id);
@@ -23,7 +23,7 @@ const CharatersPage = ({ characters, attributes, skilss }: IOwnProps) => {
 
   console.log("characters ", characters);
   console.log("attributes ", attributes);
-  console.log("skills ", skilss);
+  console.log("skills ", skills);
 
   return (
     <div className="relative w-full h-screen overflow-hidden mt-4">
