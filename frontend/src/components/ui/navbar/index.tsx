@@ -5,17 +5,34 @@ import {
   IconPlayerPlayFilled,
   IconSettings,
 } from "@tabler/icons-react";
-import { Group, Title } from "@mantine/core";
+import { Group, Title, Box } from "@mantine/core";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
 import classes from "./styles.module.css";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const data = [
   { link: "/play", label: "Play", icon: IconPlayerPlayFilled },
   { link: "/character", label: "Character", icon: IconUserCircle },
   { link: "/options", label: "Options", icon: IconSettings },
 ];
+
+const InnerLayout = ({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) => {
+  const router = useRouter();
+  const handleLogout = async () => {
+    const response = await fetch("/api/auth/logout", {
+      method: "POST",
+    });
+
+    if (response.status === 200) {
+      router.push("/login");
+    }
+  };
 
 const Navbar = () => {
   const [active, setActive] = useState("Billing");
@@ -45,17 +62,27 @@ const Navbar = () => {
       </div>
 
       <div className={classes.footer}>
-        <Link
-          href="#"
-          className={classes.link}
-          onClick={(event) => event.preventDefault()}
-        >
-          <IconLogout className={classes.linkIcon} stroke={1.5} size={32} />
-          <Title order={4}>Logout</Title>
-        </Link>
+      <Box
+        className={classes.link}
+        onClick={handleLogout}
+        style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
+      >
+      <IconLogout className={classes.linkIcon} stroke={1.5} size={32} />
+        <Title order={4} ml={8}>
+          Logout
+        </Title>
+      </Box>
       </div>
     </nav>
   );
+  
 };
+  return (
+    <>
+      <Navbar />
+      <Box>{children}</Box>
+    </>
+  );
+}
 
-export default Navbar;
+export default InnerLayout;
