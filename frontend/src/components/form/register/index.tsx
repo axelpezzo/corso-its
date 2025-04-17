@@ -72,7 +72,6 @@ const RegistrationForm = () => {
             },
           }}
         />
-
         <PasswordInput
           label="Password"
           placeholder="Your password"

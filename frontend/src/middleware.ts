@@ -9,7 +9,7 @@ export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
   const isProtectedRoute = protectedRoutes.includes(path);
   const isPublicRoute = publicRoutes.includes(path);
-
+  
   // 2. Get the session from the cookie
   const cookieStore = await cookies();
   const session = cookieStore.get("sessionId")?.value;
