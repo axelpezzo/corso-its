@@ -62,16 +62,16 @@ router.post("/register", authJWT, async (ctx) => {
     });
 
     ctx.status = 201;
-    ctx.body = user;
+    ctx.body = { message: "User created", user };
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
-        ctx.status = 500;
-        ctx.body = "User mail duplicated";
+        ctx.status = 409;
+        ctx.body = { error: "User mail duplicated" };
       }
     } else {
       ctx.status = 500;
-      ctx.body = "Error creating user";
+      ctx.body = { error: "Error creating user" };
     }
   }
 });
@@ -124,7 +124,7 @@ router.post("/login", authJWT, async (ctx) => {
 
     if (!user) {
       ctx.status = 401;
-      ctx.body = "Invalid credentials";
+      ctx.body = { error: "Invalid credentials" };
       return;
     }
 
@@ -132,7 +132,7 @@ router.post("/login", authJWT, async (ctx) => {
 
     if (!isValidPassword) {
       ctx.status = 401;
-      ctx.body = "Invalid credentials" ;
+      ctx.body = { error: "Invalid credentials" };
       return;
     }
 
@@ -151,10 +151,10 @@ router.post("/login", authJWT, async (ctx) => {
     });
 
     ctx.status = 200;
-    ctx.body = "Login successful as "+ user.email ;
+    ctx.body = { message: "Login successful", user };
   } catch (error) {
     ctx.status = 500;
-    ctx.body = "Error logging in";
+    ctx.body = { error: "Error logging in" };
   }
 });
 
@@ -195,7 +195,7 @@ router.post("/logout", authJWT, authUser, async (ctx) => {
 
   if (!sessionId) {
     ctx.status = 401;
-    ctx.body = "Unauthorized" ;
+    ctx.body = { error: "Unauthorized" };
     return;
   }
 
@@ -212,10 +212,10 @@ router.post("/logout", authJWT, authUser, async (ctx) => {
     });
 
     ctx.status = 200;
-    ctx.body = "Logout successful";
+    ctx.body = { message: "Logout successful" };
   } catch (error) {
     ctx.status = 500;
-    ctx.body = "Error logging out";
+    ctx.body = { error: "Error logging out" };
   }
 });
 
@@ -273,10 +273,10 @@ router.patch("/:id", authUser, async (ctx) => {
     });
 
     ctx.status = 200;
-    ctx.body = "User updated";
+    ctx.body = { message: "User updated" };
   } catch (error) {
     ctx.status = 500;
-    ctx.body = "Error updating user";
+    ctx.body = { error: "Error updating user" };
   }
 });
 
@@ -336,7 +336,7 @@ router.delete("/:id", authUser, async (ctx) => {
   });
 
   ctx.status = 200;
-  ctx.body = "User deleted" ;
+  ctx.body = { message: "User deleted" };
 });
 
 export default router;
