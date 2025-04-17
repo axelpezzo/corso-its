@@ -10,7 +10,7 @@ const UiCard = ({ ...data }: any) => {
       p="xl"
       shadow="md"
       radius="md"
-      style={{ backgroundColor: "#ff00cc" }}
+      bg={"violet.4"}
       className={classes.card}
     >
       <div>
