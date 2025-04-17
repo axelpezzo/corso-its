@@ -16,11 +16,13 @@ const InnerLayout = ({
   const router = useRouter();
 
   const handleLogout = async () => {
-    await fetch("/api/auth/logout", {
+    const response = await fetch("/api/auth/logout", {
       method: "POST",
     });
 
-    router.push("/login");
+    if (response.status === 200) {
+      router.push("/login");
+    }
   };
 
   return (

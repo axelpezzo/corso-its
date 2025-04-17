@@ -19,7 +19,6 @@ export async function POST(req: NextRequest) {
       status: 201,
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer" + process.env.API_BACKEND_TOKEN,
       },
     });
   }
