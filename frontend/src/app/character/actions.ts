@@ -13,6 +13,7 @@ export const getCharacters = async () => {
     },
     credentials: "include",
     next: {
+      //revalidate: 60 * 60 * 24, // 1 giorno
       tags: ["characters"],
     },
   });
@@ -20,6 +21,6 @@ export const getCharacters = async () => {
   return response.json();
 };
 
-// getClasses
+// getAttributes
 
 // getSkills

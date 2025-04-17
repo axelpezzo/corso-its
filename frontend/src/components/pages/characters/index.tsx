@@ -7,11 +7,11 @@ import { use, useEffect, useState } from "react";
 
 interface IOwnProps {
   characters: Record<string, string | number>[];
-  classes?: Record<string, string | number>[];
+  attributes?: Record<string, string | number>[];
   skilss?: Record<string, string | number>[];
 }
 
-const CharatersPage = ({ characters, classes, skilss }: IOwnProps) => {
+const CharatersPage = ({ characters, attributes, skilss }: IOwnProps) => {
   const { id } = useCharacterStore();
   const [render, setRender] = useState(false);
   const character = characters.find((item) => item.id === id);
