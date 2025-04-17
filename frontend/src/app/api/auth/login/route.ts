@@ -8,6 +8,7 @@ export async function POST(req: NextRequest) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": "Bearer" + process.env.API_BACKEND_TOKEN,
     },
     credentials: "include",
     body: JSON.stringify({ email, password }),
