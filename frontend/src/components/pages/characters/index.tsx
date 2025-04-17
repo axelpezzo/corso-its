@@ -7,11 +7,11 @@ import { useEffect } from "react";
 
 interface IOwnProps {
   characters: Record<string, string | number>[];
-  classes?: Record<string, string | number>[];
-  skilss?: Record<string, string | number>[];
+  attributes?: Record<string, string | number>[];
+  skills?: Record<string, string | number>[];
 }
 
-const CharatersPage = ({ characters, classes, skilss }: IOwnProps) => {
+const CharatersPage = ({ characters, attributes, skills }: IOwnProps) => {
   const { id } = useCharacterStore();
 
   useEffect(() => {
@@ -21,6 +21,10 @@ const CharatersPage = ({ characters, classes, skilss }: IOwnProps) => {
       const idRace = character?.idRace;
     }
   }, [id]);
+
+  console.log("characters ", characters);
+  console.log("attributes ", attributes);
+  console.log("skills ", skills);
 
   return (
     <div className="relative w-full h-screen overflow-hidden mt-4">
