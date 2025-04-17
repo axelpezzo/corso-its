@@ -10,7 +10,7 @@
     "prisma:dev": "npx prisma db seed",
     "db": "npx prisma studio",
     "dev:docker": "docker-compose -f docker-compose.yml up",
-    "dev:docker:build": "docker-compose -f docker-compose.yml up --build",
+    "dev:docker:build": "docker-compose -f docker-compose.yml up --build -d",
     "dev:docker:down": "docker-compose -f docker-compose.yml down -v",
     "dev": "npm run prisma:migrate:dev && npm run prisma:generate && npx tsx watch src/index.ts",
     "prisma:seeder:dev" : "npx prisma db seed",
