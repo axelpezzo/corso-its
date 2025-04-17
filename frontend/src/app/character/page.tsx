@@ -1,7 +1,7 @@
-import HomePage from "@/components/pages/home";
+import CharatersPage from "@/components/pages/characters";
 
 const Page = async () => {
-  return <h1>Character</h1>;
+  return <CharatersPage />;
 };
 
 export default Page;

@@ -6,16 +6,22 @@ info:
 paths:
   /attribute:
     get:
-      summary: Recupera tutti gli attributi
+      summary: Retrieve all attributes
       tags:
         - Attribute
       responses:
         "200":
-          description: Lista degli attributi recuperata con successo
+          description: Attribute list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Attribute"
         "500":
-          description: Errore del server
+          description: Server error
     post:
-      summary: Crea un nuovo attributo
+      summary: Create a new attribute
       tags:
         - Attribute
       requestBody:
@@ -33,14 +39,14 @@ paths:
                   type: string
       responses:
         "201":
-          description: Attributo creato con successo
+          description: Attribute created successfully
         "400":
-          description: Errore di validazione
+          description: Validation error
         "500":
-          description: Errore del server
+          description: Server error
   "/attribute/{id}":
     get:
-      summary: Recupera un attributo singolo
+      summary: Retrieve a single attribute
       tags:
         - Attribute
       parameters:
@@ -51,13 +57,19 @@ paths:
             type: string
       responses:
         "200":
-          description: Attributo recuperato con successo
+          description: Attribute successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Attribute"
         "404":
-          description: Attributo non trovato
+          description: Attribute not found
         "500":
-          description: Errore del server
+          description: Server error
     put:
-      summary: Aggiorna un attributo esistente
+      summary: Update an existing attribute
       tags:
         - Attribute
       parameters:
@@ -82,29 +94,35 @@ paths:
                   type: string
       responses:
         "200":
-          description: Attributo aggiornato con successo
+          description: Attribute updated successfully
         "404":
-          description: Attributo non trovato
+          description: Attribute not found
         "500":
-          description: Errore interno del server
+          description: Server error
     delete:
-      summary: Elimina un attributo
+      summary: Delete an attribute
       tags:
         - Attribute
       parameters:
         - in: path
           name: id
           required: true
-          description: ID dell'attributo da eliminare
+          description: ID of the attribute to delete
           schema:
             type: string
       responses:
         "200":
-          description: Attributo eliminato con successo
+          description: Attribute successfully deleted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Attribute"
         "404":
-          description: Attributo non trovato
+          description: Attribute not found
         "500":
-          description: Errore interno del server
+          description: Server error
   /class:
     get:
       summary: Ottieni tutte le classi
@@ -820,24 +838,24 @@ components:
         id:
           type: string
           format: uuid
-          description: ID univoco dell'attributo
+          description: Unique ID of the attribute
         name:
           type: string
-          description: Nome dell'attributo
+          description: Attribute name
         key:
           type: string
-          description: Chiave univoca dell'attributo
+          description: Unique attribute key
         value:
           type: string
-          description: Valore dell'attributo
+          description: Attribute value
         createdAt:
           type: string
           format: date-time
-          description: Data di creazione dell'attributo
+          description: Attribute creation date
         updatedAt:
           type: string
           format: date-time
-          description: Data di ultima modifica dell'attributo
+          description: Last modified date of the attribute
     Class:
       type: object
       required:
@@ -945,6 +963,6 @@ components:
                   example: Unauthorized access
 tags:
   - name: Attribute
-    description: API per la gestione degli attributi
+    description: API for managing attributes
   - name: Classes
     description: API per la gestione delle classi
