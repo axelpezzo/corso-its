@@ -18,12 +18,10 @@ const data = [
   { link: "/options", label: "Options", icon: IconSettings },
 ];
 
-const InnerLayout = ({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
+const Navbar = () => {
+  const [active, setActive] = useState("");
   const router = useRouter();
+
   const handleLogout = async () => {
     const response = await fetch("/api/auth/logout", {
       method: "POST",
@@ -33,9 +31,6 @@ const InnerLayout = ({
       router.push("/login");
     }
   };
-
-const Navbar = () => {
-  const [active, setActive] = useState("Billing");
 
   const links = data.map((item) => (
     <Link
@@ -62,27 +57,19 @@ const Navbar = () => {
       </div>
 
       <div className={classes.footer}>
-      <Box
-        className={classes.link}
-        onClick={handleLogout}
-        style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
-      >
-      <IconLogout className={classes.linkIcon} stroke={1.5} size={32} />
-        <Title order={4} ml={8}>
-          Logout
-        </Title>
-      </Box>
+        <Box
+          className={classes.link}
+          onClick={handleLogout}
+          style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
+        >
+          <IconLogout className={classes.linkIcon} stroke={1.5} size={32} />
+          <Title order={4} ml={8}>
+            Logout
+          </Title>
+        </Box>
       </div>
     </nav>
   );
-  
 };
-  return (
-    <>
-      <Navbar />
-      <Box>{children}</Box>
-    </>
-  );
-}
 
-export default InnerLayout;
+export default Navbar;
