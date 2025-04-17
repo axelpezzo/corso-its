@@ -10,11 +10,11 @@ import {
   TextInput,
   useMantineTheme,
 } from "@mantine/core";
+import { useState } from "react";
 import { useForm } from "@mantine/form";
 import { initialValuesLogin } from "./const";
 import { LoginFormValues } from "./types";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { errorsHandlers } from "@/lib/errorsHandlers";
 
 const LoginForm = () => {
