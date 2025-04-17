@@ -12,7 +12,7 @@ import { authJWT } from "../middlewares/middlewareJWT";
  * @swagger
  * tags:
  *   name: Attribute
- *   description: API per la gestione degli attributi
+ *   description: API for managing attributes
  */
 
 const router = new Router({
@@ -23,13 +23,19 @@ const router = new Router({
  * @swagger
  * /attribute:
  *   get:
- *     summary: Recupera tutti gli attributi
+ *     summary: Retrieve all attributes
  *     tags: [Attribute]
  *     responses:
  *       200:
- *         description: Lista degli attributi recuperata con successo
+ *         description: Attribute list retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Attribute'
  *       500:
- *         description: Errore del server
+ *         description: Server error
  */
 
 router.get(
@@ -53,7 +59,7 @@ router.get(
  * @swagger
  * /attribute:
  *   post:
- *     summary: Crea un nuovo attributo
+ *     summary: Create a new attribute
  *     tags: [Attribute]
  *     requestBody:
  *       required: true
@@ -70,11 +76,11 @@ router.get(
  *                 type: string
  *     responses:
  *       201:
- *         description: Attributo creato con successo
+ *         description: Attribute created successfully
  *       400:
- *         description: Errore di validazione
+ *         description: Validation error
  *       500:
- *         description: Errore del server
+ *         description: Server error
  */
 
 // POST /: create a attribute
@@ -118,7 +124,7 @@ router.post(
  * @swagger
  * /attribute/{id}:
  *   get:
- *     summary: Recupera un attributo singolo
+ *     summary: Retrieve a single attribute
  *     tags: [Attribute]
  *     parameters:
  *       - in: path
@@ -128,11 +134,17 @@ router.post(
  *           type: string
  *     responses:
  *       200:
- *         description: Attributo recuperato con successo
+ *         description: Attribute successfully retrieved
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Attribute'
  *       404:
- *         description: Attributo non trovato
+ *         description: Attribute not found
  *       500:
- *         description: Errore del server
+ *         description: Server error
  */
 
 // GET /:id: get single attribute
@@ -170,7 +182,7 @@ router.get(
  * @swagger
  * /attribute/{id}:
  *   put:
- *     summary: Aggiorna un attributo esistente
+ *     summary: Update an existing attribute
  *     tags: [Attribute]
  *     parameters:
  *       - in: path
@@ -194,11 +206,11 @@ router.get(
  *                 type: string
  *     responses:
  *       200:
- *         description: Attributo aggiornato con successo
+ *         description: Attribute updated successfully
  *       404:
- *         description: Attributo non trovato
+ *         description: Attribute not found
  *       500:
- *         description: Errore interno del server
+ *         description: Server error
  */
 
 // PATCH /:id: update single attribute
@@ -237,22 +249,28 @@ router.patch(
  * @swagger
  * /attribute/{id}:
  *   delete:
- *     summary: Elimina un attributo
+ *     summary: Delete an attribute
  *     tags: [Attribute]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID dell'attributo da eliminare
+ *         description: ID of the attribute to delete
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: Attributo eliminato con successo
+ *         description: Attribute successfully deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Attribute'
  *       404:
- *         description: Attributo non trovato
+ *         description: Attribute not found
  *       500:
- *         description: Errore interno del server
+ *         description: Server error
  */
 
 // DELETE /:id: delete single character
@@ -291,24 +309,24 @@ router.delete(
  *         id:
  *           type: string
  *           format: uuid
- *           description: ID univoco dell'attributo
+ *           description: Unique ID of the attribute
  *         name:
  *           type: string
- *           description: Nome dell'attributo
+ *           description: Attribute name
  *         key:
  *           type: string
- *           description: Chiave univoca dell'attributo
+ *           description: Unique attribute key
  *         value:
  *           type: string
- *           description: Valore dell'attributo
+ *           description: Attribute value
  *         createdAt:
  *           type: string
  *           format: date-time
- *           description: Data di creazione dell'attributo
+ *           description: Attribute creation date
  *         updatedAt:
  *           type: string
  *           format: date-time
- *           description: Data di ultima modifica dell'attributo
+ *           description: Last modified date of the attribute
  */
 
 // GET /attribute/:id/skill
